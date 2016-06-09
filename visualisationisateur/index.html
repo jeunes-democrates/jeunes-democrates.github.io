@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Montre ton soutien !">
+	<meta name="author" content="">
+
+	<meta property="og:title" content="PROFILATIONISATIONNNNN">
+	<meta property="og:site_name" content="Les Nouveaux Démocrates">
+	<meta property="og:description" content="Montre ton soutien ! Change le monde !">
+	<meta property="og:image" content="http://nouveaux-democrates.fr/profilationisateur/photo.png">
+
+	<title>VISUALISATIONISATIONNNNNN !</title>
+
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" type="text/css">
+
+</head>
+
+<body>
+
+	<div id="mainContainer" class="container" >
+
+		<h1>Générateur de visuels</h1>
+	
+		<hr>
+	
+		<form>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Citation</div>
+					<input id="quoteWriter" class="form-control" placeholder="Pour une interdiction totale du Glyphosate !"></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Mot-clé</div>
+					<input id="hashTagWriter" class="form-control" placeholder="Un unique mot clé, par exemple 'Environnement'."></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Image</div>
+					<input id="backgroundWriter" class="form-control" placeholder="Adresse de l'image, par exemple sur http://imgur.com"></input>
+				</div>
+			</div>
+		</form>
+	
+		<hr>
+		
+		<div id="shareableVisual">
+		
+			<div id="background" style="background-image: url('https://images.unsplash.com/photo-1418154462585-8ca028f43c48')"></div>
+		
+			<div id="cover"></div>
+
+			<img id="logo" src="logo.png">
+
+			<div id="hashTagBar">
+				<span id="hashTag">Glyphosate</span>
+			</div>
+
+			<div id="quoteBar">
+				<span id="quote">Pour une interdiction totale du Glyphosate !</span>
+			</div>
+		
+		</div>
+	
+		<hr>
+	
+		<a id="download" class="btn btn-primary btn-block btn-lg">
+			Télécharger la coolitude
+		</a>
+	
+		<div id="alert"></div>
+
+	</div>
+
+</body>
+
+<style>
+#mainContainer { width: 1230px; max-width: 1230px; }
+h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
+#shareableVisual { position: relative; display: inline-block; overflow: hidden; }
+#background { width: 1200px; height: 630px; background-size: cover; background-position: center center; }
+#cover { position: absolute; top: 0; left: 0; width: 1200px; height: 630px; background-color: rgba(0,0,0,0.35) }
+#logo { position: absolute; right: 6em; bottom: 3em; height: 6em; }
+#quoteBar { position: absolute; top: 12em; height: 16em; width: 100%; }
+#quote { display: block; padding: 0 6rem; position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 4em; line-height: 1.1; font-family: 'Century Gothic', 'Futura', sans-serif; text-shadow: .05em .05em .15em rgba(0,0,0,0.5); }
+#hashTagBar { background-color: rgba(255,96,0, 0.9); position: absolute; left: 0; top: 3em;  }
+#hashTag {
+	display: inline-block; padding: 0 .5em 0 6rem;
+	font-family: 'Architects Daughter'; font-size: 4em; color: white;
+}
+#hashTag::before { content: '#'; position: absolute; top: .15em; left: 3rem; }
+
+</style>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+<script>
+
+var $quoteWriter = $('#quoteWriter')
+$quoteWriter.on('keyup',function(){
+	$('#quote').text($quoteWriter.val())
+	refreshCanvas()
+})
+
+var $hashTagWriter = $('#hashTagWriter')
+$hashTagWriter.on('keyup',function(){
+	$('#hashTag').text($hashTagWriter.val())
+	refreshCanvas()
+})
+
+var $backgroundWriter = $('#backgroundWriter')
+$backgroundWriter.on('keyup',function(){
+	console.log('updating background with image ' + $backgroundWriter.val() )
+	$('#background').css('background-image', "url('" + $backgroundWriter.val() + "')" )
+	refreshCanvas()
+})
+
+///////////////
+
+function refreshCanvas() {
+	html2canvas($('#shareableVisual')).then(function(canvas) {
+		var image = canvas.toDataURL("image/jpeg");
+		$('#download').attr({
+			'download': 'photoDeProfil-LND+IC.jpeg',
+			'href'    : image
+		});
+	});
+}
+
+refreshCanvas()
+
+</script>
+
+<footer style="margin-top: 3em; text-align: center;" >
+<p style="font-size: .8em; color: #999">Fabriqué avec ❤ par Antonin<br/>En cas de problème, passez moi un <a href="https://www.messenger.com/t/antonin.grele">message</a> !</p>
+</footer>
+
+</body>
+
+</html>
