@@ -53,7 +53,9 @@
 				</div>
 			</div>
 		</form>
-	
+
+<!--		<button class="btn btn-secondary btn-block" onClick="refreshCanvas()">↻ Recharger</button>
+	-->
 		<hr>
 		
 		<div id="shareableVisual">
@@ -74,12 +76,20 @@
 		
 		</div>
 	
-		<hr>
-	
-		<a id="download" class="btn btn-primary btn-block btn-lg">
+<!--	<a id="download" class="btn btn-primary btn-block btn-lg">
 			Télécharger la coolitude
 		</a>
-	
+-->	
+
+		<div class="input-group" style="margin: .5rem 0 3rem;">
+			<div class="input-group-addon">URL de partage</div>
+			<input id="shareUrl" type="text" class="form-control"
+				placeholder="http://..." readonly
+				onClick="this.setSelectionRange(0, this.value.length)"/>
+		</div>
+
+		<p style="text-align: center;">Attention, l'URL de partage sert à partager un visuel en cours de création, pas au partage sur les réseaux sociaux !</p>
+
 		<div id="alert"></div>
 
 	</div>
@@ -91,7 +101,7 @@
 h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
 #shareableVisual { position: relative; display: inline-block; overflow: hidden; }
 #background { width: 1200px; height: 630px; background-size: cover; background-position: center center; }
-#cover { position: absolute; top: 0; left: 0; width: 1200px; height: 630px; background-color: rgba(0,0,0,0.35) }
+#cover { position: absolute; top: 0; left: 0; width: 1200px; height: 630px; background-color: rgba(0,0,0,0.4) }
 #logo { position: absolute; right: 6em; bottom: 3em; height: 6em; }
 #quoteBar { position: absolute; top: 12em; height: 16em; width: 100%; }
 #quote { display: block; padding: 0 6rem; position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 4em; line-height: 1.1; font-family: 'Century Gothic', 'Futura', sans-serif; text-shadow: .05em .05em .15em rgba(0,0,0,0.5); }
@@ -113,22 +123,24 @@ h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
 <script>
 
 var $quoteWriter = $('#quoteWriter')
-$quoteWriter.on('keyup',function(){
-	$('#quote').text($quoteWriter.val())
-	refreshCanvas()
+	$quote = $('#quote')
+$quoteWriter.keyup(function(){
+	$quote.text($quoteWriter.val())
+	generateShareUrl()
 })
 
 var $hashTagWriter = $('#hashTagWriter')
-$hashTagWriter.on('keyup',function(){
-	$('#hashTag').text($hashTagWriter.val())
-	refreshCanvas()
+	$hashTag = $('#hashTag')
+$hashTagWriter.keyup(function(){
+	$hashTag.text($hashTagWriter.val())
+	generateShareUrl()
 })
 
 var $backgroundWriter = $('#backgroundWriter')
-$backgroundWriter.on('keyup',function(){
-	console.log('updating background with image ' + $backgroundWriter.val() )
-	$('#background').css('background-image', "url('" + $backgroundWriter.val() + "')" )
-	refreshCanvas()
+	$background = $('#background')
+$backgroundWriter.keyup(function(){
+	$background.css('background-image', "url('" + $backgroundWriter.val() + "')" )
+	generateShareUrl()
 })
 
 ///////////////
@@ -143,7 +155,45 @@ function refreshCanvas() {
 	});
 }
 
-refreshCanvas()
+function readDataFromURL(url) {
+	var argumentStrings = url.split('?$')[1].split('&$')
+		argumentsFromUrl = readArguments(argumentStrings)
+	$.each(argumentsFromUrl, function(argumentType, argumentValue){
+		if (argumentType === "background") {
+			$backgroundWriter.val(argumentValue)
+			$background.css('background-image', "url('" + argumentValue + "')" )
+		} else {
+			$('#'+argumentType+'Writer').val(argumentValue)
+			$('#'+argumentType).text(argumentValue)
+		}
+	})
+	generateShareUrl()
+}
+
+function readArguments(argumentStrings) {
+	var argumentTypes = ['quote', 'hashTag', 'background']
+		result = {}
+	$.each(argumentStrings, function(i, argumentString){
+		// For each argument passed through the URL, add it to the result object
+		$.each(argumentTypes, function(j, argumentType){
+			var split = argumentString.split(argumentType + '=')
+			if (split[1]) result[argumentType] = decodeURI(split[1])
+		})
+	})
+	return result
+}
+
+function generateShareUrl() {
+	var url =
+		window.location.origin + window.location.pathname +
+		'?$quote=' + $('#quoteWriter').val() +
+		'&$hashTag=' + $('#hashTagWriter').val() +
+		'&$background=' + $('#backgroundWriter').val()
+	console.log(url)
+	$('#shareUrl').val(encodeURI(url))
+}
+
+readDataFromURL(window.location.href)
 
 </script>
 
