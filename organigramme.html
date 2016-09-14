@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+	<meta charset="utf-8">
+
+</head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&subset=latin-ext" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet"> 
+
+<div class="organigramme__pole">
+
+	<p><strong>Le Bureau National est le "gouvernement" des Jeunes Démocrates.</strong> Il est élu pour une durée de deux ans, et est constitué de 21 membres, dont un(e) président(e).</p>
+	<p>La dernière élection a eu lieu en mars 2016. La dernière modification a eu lieu en septembre 2016.</p>
+	
+	<p>La composition peut évoluer :</p>
+	<ul>
+	 	<li>En cas de cooptation d'un(e) membre, dans la limite de deux nouveaux membres par an</li>
+	 	<li>En cas de démission d'un(e) membre, par exemple dans le cadre de l'application de notre <a href="http://jeunes-democrates.org/nos-textes/la-charte-ethique/">charte éthique</a> qui prévient le cumul d'un mandat de président de fédération avec celui de membre du bureau</li>
+	</ul>
+
+</div>
+
+<div class="organigramme__pole">
+
+	<h2 class="organigramme__pole__name">Présidence</h2>
+	<div class="organigramme__pole__contact bouton" data-email="presidence@jeunes-democrates.org">Contacter la Présidence</div>
+		
+	<div class="organigramme__membre">
+		<div class="organigramme__photo" data-img-url=""></div>
+		<h3 class="organigramme__nom">Antonin <strong>Grêlé</strong></h3>
+		<div class="organigramme__titre">Président des Jeunes Démocrates</div>
+		<div class="organigramme__email bouton">antonin.grele@jeunes-democrates.org</div>
+		<div class="organigramme__twitter bouton">@AntoninGrele</div>
+	</div>
+
+</div>
+
+<div class="organigramme__pole">
+
+	<h2 class="organigramme__pole__name">Idées & Projet Politique</h2>
+	<div class="organigramme__pole__contact bouton" data-email="projet@jeunes-democrates.org">Contacter le pôle projet</div>
+		
+	<div class="organigramme__membre">
+		<div class="organigramme__photo" data-img-url=""></div>
+		<h3 class="organigramme__nom">Anaïs <strong>Brood</strong></h3>
+		<div class="organigramme__titre">Vice-Présidente en charge du Pôle Idées & Projet</div>
+		<a class="organigramme__email bouton">anais.brood@jeunes-democrates.org</a>
+		<a class="organigramme__twitter bouton">@anaisbrd7</a>
+	</div>
+
+	<div class="organigramme__membre small">
+		<div class="organigramme__photo" data-img-url=""></div>
+		<h3 class="organigramme__nom">Maxime <strong>Bischoffe</strong></h3>
+		<div class="organigramme__titre">Membre du Pôle Idées & Projet</div>
+		<a class="organigramme__email bouton">maxime.bischoffe@jeunes-democrates.org</a>
+	</div>
+
+</div>
+
+<div class="organigramme__pole">
+
+	<h2 class="organigramme__pole__name">Évènementiel</h2>
+	<div class="organigramme__pole__contact bouton" data-email="presidence@jeunes-democrates.org">Contacter le pôle évènementiel</div>
+
+	<div class="organigramme__membre">
+		<div class="organigramme__photo" data-img-url=""></div>
+		<h3 class="organigramme__nom">Maxime <strong>Jabet</strong></h3>
+		<div class="organigramme__titre">Responsable du Pôle Évènementiel</div>
+		<div class="organigramme__email bouton">maxime.jabet@jeunes-democrates.org</div>
+		<div class="organigramme__twitter bouton">@M_Jabet</div>
+	</div>
+
+</div>
+
+<style>
+
+ul { margin: 0; }
+h2,h3 { font-weight: normal; font-size: 1em; margin: 0; line-height: inherit; }
+.organigramme__pole { padding: 1.25em; font-family: 'Roboto Slab', 'Century Gothic', sans-serif; font-size: 1.2em; line-height: 1.5; }
+.organigramme__pole__name { font-size: 1.4em; color: #004067; font-family: "Bad Script", sans-serif; display: inline-block; margin-right: .25em; }
+.organigramme__pole__contact { position: relative; bottom: .5em; }
+.organigramme__photo { width: 5.5em; height: 5.5em; margin: 0 1em; background-color: #ccc; float: left; border-radius: 5em; }
+.small .organigramme__photo { width: 4.5em; height: 4.5em; margin: 0 1.5em; }
+.organigramme__membre { margin: 1em 0; border-left: .25em solid #ff6000; }
+.organigramme__nom { font-size: 1.4em; text-transform: uppercase; color: #004067; }
+.small .organigramme__nom { font-size: 1.1em; }
+.organigramme__titre { margin-bottom: .25em; color: #666; }
+.small .organigramme__titre { font-size: .8em; }
+.organigramme__email::before { content: '\f0e0'; font-family: FontAwesome; margin-right: .5em; }
+.organigramme__twitter::before { content: '\f099'; font-family: FontAwesome; margin-right: .5em; }
+.organigramme__pole__contact::before { content: '\f1d8'; font-family: FontAwesome; margin-right: .5em; }
+
+.bouton { display: inline-block; font-size: .55em; background-color: #009FFF; border-radius: 4px; padding: .3em .6em; color: white; }
+
+</style>
+
+<script>
+
+$( document ).ready(function() {
+
+	$('.organigramme__email').each(function(){
+		var $bouton = $(this)
+		$bouton.attr('href', 'mailto:' + $bouton.text() )
+	})
+
+})
+
+</script>
