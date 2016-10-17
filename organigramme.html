@@ -4,6 +4,8 @@
 <head>
 
 	<meta charset="utf-8">
+	<!-- jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 
@@ -24,10 +26,30 @@
 
 </div>
 
+<div id="organigramme__poles"></div>
+
+<hr/>
+
+<script>
+
+var source = "https://bureau-national-jdem.firebaseio.com/.json"
+
+$.get(source, function(poles){
+	console.log(poles)
+	$.each(poles, function(i, pole){
+		pole.name = '<div class="organigramme__pole__name">' + pole.name + '</div>'
+		pole.email = '<div class="organigramme__pole__email organigramme__bouton" data-email="' + pole.email + '">Contacter</div>'
+		pole = '<div class="organigramme__pole">' + pole.name + pole.email + '</div>'
+		$('#organigramme__poles').append(pole)
+	})
+})
+
+</script>
+
 <div class="organigramme__pole">
 
 	<div class="organigramme__pole__name">Présidence</div>
-	<div class="organigramme__pole__contact organigramme__bouton" data-email="presidence@jeunes-democrates.org">Contacter</div>
+	<div class="organigramme__pole__email organigramme__bouton" data-email="presidence@jeunes-democrates.org">Contacter</div>
 		
 	<div class="organigramme__membre">
 		<div class="organigramme__photo" data-img-url=""></div>
@@ -41,7 +63,7 @@
 <div class="organigramme__pole">
 
 	<div class="organigramme__pole__name">Idées & Projet Politique</div>
-	<div class="organigramme__pole__contact organigramme__bouton" data-email="projet@jeunes-democrates.org">Contacter</div>
+	<div class="organigramme__pole__email organigramme__bouton" data-email="projet@jeunes-democrates.org">Contacter</div>
 		
 	<div class="organigramme__membre">
 		<div class="organigramme__photo" data-img-url=""></div>
@@ -62,7 +84,7 @@
 <div class="organigramme__pole">
 
 	<div class="organigramme__pole__name">Évènementiel</div>
-	<div class="organigramme__pole__contact organigramme__bouton" data-email="presidence@jeunes-democrates.org">Contacter</div>
+	<div class="organigramme__pole__email organigramme__bouton" data-email="presidence@jeunes-democrates.org">Contacter</div>
 
 	<div class="organigramme__membre">
 		<div class="organigramme__photo" data-img-url=""></div>
@@ -78,19 +100,19 @@
 /* Organigramme du bureau */
 .organigramme__pole { padding: 1.25em; font-family: 'Roboto Slab', 'Century Gothic', sans-serif; font-size: 1.2em; line-height: 1.5; }
 .organigramme__pole__name { font-size: 1.4em; color: #004067; font-family: "Bad Script", sans-serif; }
-.organigramme__pole__contact { position: relative; bottom: .5em; }
-.organigramme__photo { width: 5.5em; height: 5.5em; margin: 0 1em; background-color: #ccc; float: left; border-radius: 5em; }
+.organigramme__pole__email { position: relative; bottom: .5em; }
+.organigramme__pole__email::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
+.organigramme__photo { width: 5.5em; height: 5.5em; margin-right: 1em; background-color: #ccc; float: left; border-radius: 5em; }
 .organigramme__nom { font-size: 1.4em; text-transform: uppercase; color: #004067; }
 .organigramme__titre { margin-bottom: .25em; color: #666; }
-.small .organigramme__photo { width: 4.5em; height: 4.5em; margin: 0 1.5em; }
+.small .organigramme__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
 .small .organigramme__nom { font-size: 1.1em; }
 .small .organigramme__titre { font-size: .8em; }
-.organigramme__membre { margin: 1em 0; border-left: .25em solid #ff6000; }
+.organigramme__membre { margin: 1em 0; padding-left: 1em; border-left: .25em solid #ff6000; }
 .organigramme__liens { display: block; min-width: 1em; }
 .organigramme__liens a::before { font-family: 'FontAwesome'; margin-right: .5em; }
 .organigramme__email::before { content: '\f0e0'; }
 .organigramme__twitter::before { content: '\f099'; }
-.organigramme__pole__contact::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
 .organigramme__bouton { display: inline-block; font-size: .55em; background-color: #009FFF; border-radius: 4px; padding: .3em .6em; color: white; }
 
 </style>

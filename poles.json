@@ -1,0 +1,232 @@
+[
+	{
+		"name" : "Présidence",
+		"email" : "presidence@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Antonin",
+				"last_name" : "Grêlé",
+				"title" : "Président des Jeunes Démocrates",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "AntoninGrele",
+				"upper_management" : true
+			}
+		]
+	},
+	{
+		"name" : "Secrétariat Général",
+		"email" : "federations@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Stéphen",
+				"last_name" : "Daloz",
+				"title" : "Secrétaire Général des Jeunes Démocrates",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : true
+			},
+			{
+				"first_name" : "Laure",
+				"last_name" : "Suric",
+				"title" : "Secrétaire Générale Adjointe",
+				"role" : "Responsable du suivi des fédérations",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Florent",
+				"last_name" : "Lucas",
+				"title" : "Secrétaire Général Adjoint",
+				"role" : "Co-responsable du suivi des élus",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Erwann",
+				"last_name" : "Bernet",
+				"title" : "Secrétaire Général Adjoint",
+				"role" : "Co-responsable du suivi des élus",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Christophe",
+				"last_name" : "Vasquez",
+				"title" : "Secrétaire Général Adjoint",
+				"role" : "Responsable des formations",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Laurianne",
+				"last_name" : "Bleuzé",
+				"title" : "Secrétaire Générale Adjointe",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			}
+		]
+	},
+	{
+		"name" : "Trésorerie",
+		"email" : "tresorerie@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Stéphane",
+				"last_name" : "Manet",
+				"title" : "Trésorier des Jeunes Démocrates",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : true
+			},
+			{
+				"first_name" : "Nassim",
+				"last_name" : "Amrani",
+				"title" : "Chargé de mission",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			}
+		]
+	},
+	{
+		"name" : "Pôle Idées & Projet",
+		"email" : "projet@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Anaïs",
+				"last_name" : "Brood",
+				"title" : "Vice-Présidente des Jeunes Démocrates",
+				"role" : "Responsable du pôle Idées & Projet",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : true
+			},
+			{
+				"first_name" : "Maxime",
+				"last_name" : "Bischoffe",
+				"title" : "Membre du Bureau National",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Manuella",
+				"last_name" : "Brillat",
+				"title" : "Membre du Bureau National",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Julien",
+				"last_name" : "Bouchet",
+				"title" : "Membre du Bureau National",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Florian",
+				"last_name" : "Brunner",
+				"title" : "Membre du Bureau National",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Romain",
+				"last_name" : "Bernardon",
+				"title" : "Membre du Bureau National",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			}
+		]
+	},
+	{
+		"name" : "Pôle Évènementiel",
+		"email" : "evenementiel@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Maxime",
+				"last_name" : "Jabet",
+				"title" : "Membre du Bureau National",
+				"role" : "Responsable du pôle Évènementiel",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : true
+			}
+		]
+	},
+	{
+		"name" : "Pôle Partenariats & Relations Extérieures",
+		"email" : "partenariats@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Charles",
+				"last_name" : "Coudoré",
+				"title" : "Vice-Président des Jeunes Démocrates",
+				"role" : "Responsable du pôle Partenariats & Relations Extérieures",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : true
+			}
+		]
+	},
+	{
+		"name" : "Pôle Communication",
+		"email" : "communication@jeunes-democrates.org",
+		"members" : [
+			{
+				"first_name" : "Sébastien",
+				"last_name" : "Drouin",
+				"title" : "Vice-Présidente des Jeunes Démocrates",
+				"role" : "Responsable du pôle Idées & Projet",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : true
+			},
+			{
+				"first_name" : "Clément",
+				"last_name" : "Blain",
+				"title" : "Chargé de Mission",
+				"role" : "Responsable des réseaux sociaux",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Dorian",
+				"last_name" : "Da Silva",
+				"title" : "Membre du Bureau National",
+				"role" : "Responsables des relations presse",
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			},
+			{
+				"first_name" : "Gwendoline",
+				"last_name" : "Ley",
+				"title" : "Membre du Bureau National",
+				"role" : false,
+				"photo_url" : false,
+				"twitter_handle" : "",
+				"upper_management" : false
+			}
+		]
+	}
+]
