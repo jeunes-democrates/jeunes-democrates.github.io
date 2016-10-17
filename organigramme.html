@@ -4,14 +4,16 @@
 <head>
 
 	<meta charset="utf-8">
-	<!-- jQuery -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet"> 
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.3/vue-resource.min.js"></script>
 
 </head>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&subset=latin-ext" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet"> 
 
 <div class="organigramme__pole">
 
@@ -26,25 +28,25 @@
 
 </div>
 
-<div id="organigramme__poles"></div>
+<div id="organigramme__poles">
+	
+	<div class="organigramme__pole" v-for="pole in poles">
+	
+		<div class="organigramme__pole__name">{{ pole.name }}</div>
+		<div class="organigramme__pole__email organigramme__bouton" v-bind:data-email="pole.email">Contacter</div>
+			
+		<div class="organigramme__membre" v-for="member in pole.members" v-bind:class="{ small: !member.upper_management }">
+			<div class="organigramme__photo" v-bind:data-img-url="member.photo_url"></div>
+			<div class="organigramme__name">{{ member.first_name }} <strong>{{ member.last_name }}</strong></div>
+			<div class="organigramme__titre">{{ member.title }}</div>
+			<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@{{ member.twitter_handle }}</a></div>
+		</div>
+	
+	</div>
+
+</div>
 
 <hr/>
-
-<script>
-
-var source = "https://bureau-national-jdem.firebaseio.com/.json"
-
-$.get(source, function(poles){
-	console.log(poles)
-	$.each(poles, function(i, pole){
-		pole.name = '<div class="organigramme__pole__name">' + pole.name + '</div>'
-		pole.email = '<div class="organigramme__pole__email organigramme__bouton" data-email="' + pole.email + '">Contacter</div>'
-		pole = '<div class="organigramme__pole">' + pole.name + pole.email + '</div>'
-		$('#organigramme__poles').append(pole)
-	})
-})
-
-</script>
 
 <div class="organigramme__pole">
 
@@ -53,7 +55,7 @@ $.get(source, function(poles){
 		
 	<div class="organigramme__membre">
 		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__nom">Antonin <strong>Grêlé</strong></div>
+		<div class="organigramme__name">{{ first_name }} <strong>{{ last_name }}</strong></div>
 		<div class="organigramme__titre">Président des Jeunes Démocrates</div>
 		<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@AntoninGrele</a></div>
 	</div>
@@ -67,14 +69,14 @@ $.get(source, function(poles){
 		
 	<div class="organigramme__membre">
 		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__nom">Anaïs <strong>Brood</strong></div>
+		<div class="organigramme__name">Anaïs <strong>Brood</strong></div>
 		<div class="organigramme__titre">Vice-Présidente en charge du Pôle Idées & Projet</div>
 		<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@anaisbrd7</a></div>
 	</div>
 
 	<div class="organigramme__membre small">
 		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__nom">Maxime <strong>Bischoffe</strong></div>
+		<div class="organigramme__name">Maxime <strong>Bischoffe</strong></div>
 		<div class="organigramme__titre">Membre du Pôle Idées & Projet</div>
 		<div class="organigramme__liens"></div>
 	</div>
@@ -88,7 +90,7 @@ $.get(source, function(poles){
 
 	<div class="organigramme__membre">
 		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__nom">Maxime <strong>Jabet</strong></div>
+		<div class="organigramme__name">Maxime <strong>Jabet</strong></div>
 		<div class="organigramme__titre">Responsable du Pôle Évènementiel</div>
 		<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@M_Jabet</a></div>
 	</div>
@@ -103,10 +105,10 @@ $.get(source, function(poles){
 .organigramme__pole__email { position: relative; bottom: .5em; }
 .organigramme__pole__email::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
 .organigramme__photo { width: 5.5em; height: 5.5em; margin-right: 1em; background-color: #ccc; float: left; border-radius: 5em; }
-.organigramme__nom { font-size: 1.4em; text-transform: uppercase; color: #004067; }
+.organigramme__name { font-size: 1.4em; text-transform: uppercase; color: #004067; }
 .organigramme__titre { margin-bottom: .25em; color: #666; }
 .small .organigramme__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
-.small .organigramme__nom { font-size: 1.1em; }
+.small .organigramme__name { font-size: 1.1em; }
 .small .organigramme__titre { font-size: .8em; }
 .organigramme__membre { margin: 1em 0; padding-left: 1em; border-left: .25em solid #ff6000; }
 .organigramme__liens { display: block; min-width: 1em; }
@@ -117,15 +119,13 @@ $.get(source, function(poles){
 
 </style>
 
-
-
 <script>
 
-$( document ).ready(function() {
+Vue.http.get('https://bureau-national-jdem.firebaseio.com/.json').then((response) => {
 
-	$('.organigramme__email').each(function(){
-		var $organigramme__bouton = $(this)
-		$organigramme__bouton.attr('href', 'mailto:' + $organigramme__bouton.text() )
+	var component = new Vue({
+		el: '#organigramme__poles',
+		data: { poles: response.body }
 	})
 
 })
