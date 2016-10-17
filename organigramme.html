@@ -46,57 +46,6 @@
 
 </div>
 
-<hr/>
-
-<div class="organigramme__pole">
-
-	<div class="organigramme__pole__name">Présidence</div>
-	<div class="organigramme__pole__email organigramme__bouton" data-email="presidence@jeunes-democrates.org">Contacter</div>
-		
-	<div class="organigramme__membre">
-		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__name">{{ first_name }} <strong>{{ last_name }}</strong></div>
-		<div class="organigramme__titre">Président des Jeunes Démocrates</div>
-		<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@AntoninGrele</a></div>
-	</div>
-
-</div>
-
-<div class="organigramme__pole">
-
-	<div class="organigramme__pole__name">Idées & Projet Politique</div>
-	<div class="organigramme__pole__email organigramme__bouton" data-email="projet@jeunes-democrates.org">Contacter</div>
-		
-	<div class="organigramme__membre">
-		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__name">Anaïs <strong>Brood</strong></div>
-		<div class="organigramme__titre">Vice-Présidente en charge du Pôle Idées & Projet</div>
-		<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@anaisbrd7</a></div>
-	</div>
-
-	<div class="organigramme__membre small">
-		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__name">Maxime <strong>Bischoffe</strong></div>
-		<div class="organigramme__titre">Membre du Pôle Idées & Projet</div>
-		<div class="organigramme__liens"></div>
-	</div>
-
-</div>
-
-<div class="organigramme__pole">
-
-	<div class="organigramme__pole__name">Évènementiel</div>
-	<div class="organigramme__pole__email organigramme__bouton" data-email="presidence@jeunes-democrates.org">Contacter</div>
-
-	<div class="organigramme__membre">
-		<div class="organigramme__photo" data-img-url=""></div>
-		<div class="organigramme__name">Maxime <strong>Jabet</strong></div>
-		<div class="organigramme__titre">Responsable du Pôle Évènementiel</div>
-		<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@M_Jabet</a></div>
-	</div>
-
-</div>
-
 <style>
 
 /* Organigramme du bureau */
@@ -122,12 +71,10 @@
 <script>
 
 Vue.http.get('https://bureau-national-jdem.firebaseio.com/.json').then((response) => {
-
 	var component = new Vue({
 		el: '#organigramme__poles',
 		data: { poles: response.body }
 	})
-
 })
 
 </script>
