@@ -9,11 +9,18 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet"> 
 
+	<!-- vue -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
+
+	<!-- vue-resource -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.3/vue-resource.min.js"></script>
+
+	<!-- vuex -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.0.0/vuex.min.js"></script>
 
 </head>
 
+<div id="app"></div>
 
 <div class="organigramme__pole">
 
@@ -25,24 +32,6 @@
 		<li>En cas de cooptation d'un(e) membre, dans la limite de deux nouveaux membres par an</li>
 		<li>En cas de démission d'un(e) membre, par exemple dans le cadre de l'application de notre <a href="http://jeunes-democrates.org/nos-textes/la-charte-ethique/">charte éthique</a> qui prévient le cumul d'un mandat de président de fédération avec celui de membre du bureau</li>
 	</ul>
-
-</div>
-
-<div id="organigramme__poles">
-	
-	<div class="organigramme__pole" v-for="pole in poles">
-	
-		<div class="organigramme__pole__name">{{ pole.name }}</div>
-		<div class="organigramme__pole__email organigramme__bouton" v-bind:data-email="pole.email">Contacter</div>
-			
-		<div class="organigramme__membre" v-for="member in pole.members" v-bind:class="{ small: !member.upper_management }">
-			<div class="organigramme__photo" v-bind:data-img-url="member.photo_url"></div>
-			<div class="organigramme__name">{{ member.first_name }} <strong>{{ member.last_name }}</strong></div>
-			<div class="organigramme__titre">{{ member.title }}</div>
-			<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@{{ member.twitter_handle }}</a></div>
-		</div>
-	
-	</div>
 
 </div>
 
@@ -70,11 +59,76 @@
 
 <script>
 
-Vue.http.get('https://bureau-national-jdem.firebaseio.com/.json').then((response) => {
-	var component = new Vue({
-		el: '#organigramme__poles',
-		data: { poles: response.body }
+// Store
+const store = new Vuex.Store({
+	state: {
+		poles: [],
+	},
+	mutations: {
+		updatePoles(state, payload) {
+			let poles = payload['poles']
+			let members = payload['members']
+			state.poles = []
+			for (i in poles) {
+				let pole = poles[i].fields
+				for (i in pole.Membres) {
+					pole.Membres[i] = members.filter(obj => obj.id == pole.Membres[i] )[0].fields
+				}
+				state.poles.push(pole)
+			}
+		}
+	}
+})
+
+// var result = jsObjects.filter(obj => obj.b == 6)[0]
+
+
+// Components
+const Organogram = {
+	template: `
+		<div id="organigramme__poles">
+			<div class="organigramme__pole" v-for="pole in poles">
+
+				<div class="organigramme__pole__name">{{ pole.Name }}</div>
+				<div class="organigramme__pole__email organigramme__bouton" v-bind:data-email="pole.Email">Contacter</div>
+				
+				<div class="organigramme__membre" v-for="Membre in pole.Membres" v-bind:class="{ small: !Membre.UM }">
+					<div class="organigramme__photo" v-bind:data-img-url="Membre.photo_url"></div>
+					<div class="organigramme__name">{{ Membre.Prénom }} <strong>{{ Membre.Nom }}</strong></div>
+					<div class="organigramme__titre">{{ Membre.Rôle }}</div>
+					<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@{{ Membre.Twitter }}</a></div>
+				</div>
+
+			</div>
+		</div>
+	`,
+	computed: {
+		poles () {
+			return this.$store.state.poles
+		}
+	}
+}
+
+
+Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Pôles?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
+	let poles = response.body.records
+	Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Membres?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
+		let members = response.body.records
+		store.commit('updatePoles', {'poles': poles, 'members': members})
 	})
+})
+
+
+// App
+const app = new Vue({
+	el: '#app',
+	store,
+	components: { Organogram },
+	template: `
+		<div class="app">
+			<organogram></organogram>
+		</div>
+	`
 })
 
 </script>
