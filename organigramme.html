@@ -46,11 +46,18 @@
 
 .organigramme__pole hr { opacity: .1; }
 
-.organigramme__membre { padding: .5em 0; }
+
+.organigramme__membre {
+	padding: .5em 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
 .organigramme__membre__photo {
-	width: 5.5em; height: 5.5em; margin-right: 1em; float: left; border-radius: 5em; border: .25em solid #ccc;
+	width: 5.5em; height: 5.5em; margin-right: 1em; border-radius: 5em; border: .25em solid #ccc;
 	background-color: #ccc; background-size: cover; background-position: top;
 }
+.organigramme__membre__info { margin-top: -.5em; }
 .organigramme__membre__name { font-size: 1.1em; text-transform: uppercase; color: #004067; }
 .organigramme__membre__titre { margin-bottom: .25em; color: #666; }
 .small .organigramme__membre__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
@@ -135,7 +142,7 @@ const Organogram = {
 
 				<hr/>
 				
-				<div class="organigramme__membre" v-for="Membre in pole.Membres" v-bind:class="{ small: !Membre.UM }">
+				<div class="organigramme__membre" v-for="Membre in pole.Membres" v-bind:class="{ small: !Membre.UM }" v-if="!Membre.Hide">
 					<div class="organigramme__membre__photo" v-bind:style="{ backgroundImage: 'url(' + Membre.Photo + ')' }"></div>
 					<div class="oranigramme__membre__info">
 						<div class="organigramme__membre__name">
