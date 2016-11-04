@@ -20,7 +20,59 @@
 
 </head>
 
-<div id="app"></div>
+<style>
+
+/* Organigramme du bureau */
+.organigramme__poles {
+	columns: 26rem 4;
+	-moz-columns: 26rem 4;
+	-webkit-columns: 26rem 4;
+}
+.organigramme__pole {
+	font-family: 'Roboto Slab', 'Century Gothic', sans-serif;
+	font-size: 1.2em; line-height: 1.5; padding: 1.25em; 
+	-webkit-column-break-inside: avoid;
+	page-break-inside: avoid;
+	break-inside: avoid;
+	margin-bottom: .85em;
+	background-color: #fafafa;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.organigramme__pole__header { text-align: center; font-size: 1.4em; }
+.organigramme__pole__name { font-size: 1.1em; color: #004067; font-family: "Bad Script", sans-serif; }
+.organigramme__pole__email { position: relative; bottom: .5em; }
+.organigramme__pole__email::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
+
+.organigramme__pole hr { opacity: .1; }
+
+.organigramme__membre { padding: .5em 0; }
+.organigramme__membre__photo {
+	width: 5.5em; height: 5.5em; margin-right: 1em; float: left; border-radius: 5em; border: .25em solid #ccc;
+	background-color: #ccc; background-size: cover; background-position: top;
+}
+.organigramme__membre__name { font-size: 1.1em; text-transform: uppercase; color: #004067; }
+.organigramme__membre__titre { margin-bottom: .25em; color: #666; }
+.small .organigramme__membre__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
+.small .organigramme__membre__name { font-size: 1em; }
+.small .organigramme__membre__titre { font-size: .7em; }
+
+.organigramme__membre:after { content: ""; display: table; clear: both; }
+.organigramme__membre__liens { display: block; min-width: 1em; }
+.organigramme__membre__liens a::before { font-family: 'FontAwesome'; margin-right: .5em; }
+.organigramme__email::before { content: '\f0e0'; }
+.organigramme__twitter::before { content: '\f099'; }
+
+.organigramme__bouton {
+	display: inline-block; border-radius: 4px; padding: .3em .6em;
+	background-color: #004067; color: white; opacity: .7;
+	text-decoration: none;
+	font-size: .55em;
+}
+
+.organigramme__bouton:hover { background-color: #009FFF; transition: background-color .1s ease-in-out; }
+
+</style>
 
 <div class="organigramme__pole">
 
@@ -35,27 +87,7 @@
 
 </div>
 
-<style>
-
-/* Organigramme du bureau */
-.organigramme__pole { padding: 1.25em; font-family: 'Roboto Slab', 'Century Gothic', sans-serif; font-size: 1.2em; line-height: 1.5; }
-.organigramme__pole__name { font-size: 1.4em; color: #004067; font-family: "Bad Script", sans-serif; }
-.organigramme__pole__email { position: relative; bottom: .5em; }
-.organigramme__pole__email::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
-.organigramme__photo { width: 5.5em; height: 5.5em; margin-right: 1em; background-color: #ccc; float: left; border-radius: 5em; }
-.organigramme__name { font-size: 1.4em; text-transform: uppercase; color: #004067; }
-.organigramme__titre { margin-bottom: .25em; color: #666; }
-.small .organigramme__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
-.small .organigramme__name { font-size: 1.1em; }
-.small .organigramme__titre { font-size: .8em; }
-.organigramme__membre { margin: 1em 0; padding-left: 1em; border-left: .25em solid #ff6000; }
-.organigramme__liens { display: block; min-width: 1em; }
-.organigramme__liens a::before { font-family: 'FontAwesome'; margin-right: .5em; }
-.organigramme__email::before { content: '\f0e0'; }
-.organigramme__twitter::before { content: '\f099'; }
-.organigramme__bouton { display: inline-block; font-size: .55em; background-color: #009FFF; border-radius: 4px; padding: .3em .6em; color: white; }
-
-</style>
+<div id="app">Chargement de l'organigramme...</div>
 
 <script>
 
@@ -67,39 +99,63 @@ const store = new Vuex.Store({
 	mutations: {
 		updatePoles(state, payload) {
 			let poles = payload['poles']
+			window.potato = poles
 			let members = payload['members']
 			state.poles = []
 			for (i in poles) {
 				let pole = poles[i].fields
 				for (i in pole.Membres) {
+
+					// in each pole, replace the member ID by full member data
 					pole.Membres[i] = members.filter(obj => obj.id == pole.Membres[i] )[0].fields
+
+					// use the first photo of the attachment array, and get its standardized largest thumbnail
+					pole.Membres[i].Photo = pole.Membres[i].Photo[0].thumbnails.large.url
+
 				}
 				state.poles.push(pole)
 			}
+			// Ordonne les pôles
+			state.poles.sort(function(a, b){ return a.Ordre > b.Ordre; });
 		}
 	}
 })
 
-// var result = jsObjects.filter(obj => obj.b == 6)[0]
-
-
 // Components
 const Organogram = {
 	template: `
-		<div id="organigramme__poles">
-			<div class="organigramme__pole" v-for="pole in poles">
+		<div class="organigramme__poles">
 
-				<div class="organigramme__pole__name">{{ pole.Name }}</div>
-				<div class="organigramme__pole__email organigramme__bouton" v-bind:data-email="pole.Email">Contacter</div>
+			<div class="organigramme__pole slideUp" v-for="pole in poles" >
+
+				<div class="organigramme__pole__header">
+					<div class="organigramme__pole__name">{{ pole.Name }}</div>
+					<a class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter</a>
+				</div>
+
+				<hr/>
 				
 				<div class="organigramme__membre" v-for="Membre in pole.Membres" v-bind:class="{ small: !Membre.UM }">
-					<div class="organigramme__photo" v-bind:data-img-url="Membre.photo_url"></div>
-					<div class="organigramme__name">{{ Membre.Prénom }} <strong>{{ Membre.Nom }}</strong></div>
-					<div class="organigramme__titre">{{ Membre.Rôle }}</div>
-					<div class="organigramme__liens"><a class="organigramme__twitter organigramme__bouton">@{{ Membre.Twitter }}</a></div>
+					<div class="organigramme__membre__photo" v-bind:style="{ backgroundImage: 'url(' + Membre.Photo + ')' }"></div>
+					<div class="oranigramme__membre__info">
+						<div class="organigramme__membre__name">
+							{{ Membre.Prénom }} <strong>{{ Membre.Nom }}</strong>
+						</div>
+						<div class="organigramme__membre__titre">
+							{{ Membre.Rôle }}
+						</div>
+						<div class="organigramme__membre__liens">
+							<a v-if="Membre.Twitter" class="organigramme__twitter organigramme__bouton"
+								v-bind:href="'https://twitter.com/' + Membre.Twitter" target="_blank"
+								>
+								@{{ Membre.Twitter }}
+							</a>
+						</div>
+					</div>
 				</div>
 
 			</div>
+
 		</div>
 	`,
 	computed: {
@@ -132,3 +188,22 @@ const app = new Vue({
 })
 
 </script>
+
+<style>
+
+/*
+==============================================
+slideUp
+==============================================
+*/
+
+
+.slideUp {
+	animation-name: slideUp; animation-duration: 1s; animation-timing-function: ease;
+	-webkit-animation-name: slideUp; -webkit-animation-duration: 1s; -webkit-animation-timing-function: ease;
+}
+
+@keyframes slideUp { 0% { transform: translateY(10%); opacity: 0; } 100% { transform: translateY(0%); opacity: 1; } }
+@-webkit-keyframes slideUp { 0% { -webkit-transform: translateY(10%); opacity: 0; } 100% { -webkit-transform: translateY(0%); opacity: 1; }	}
+
+</style>
