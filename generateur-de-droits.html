@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet"> 
+
+	<!-- vue -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
+
+	<!-- vue-resource -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.3/vue-resource.min.js"></script>
+
+	<!-- vuex -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.0.0/vuex.min.js"></script>
+
+</head>
+
+<div id="app">Chargement...</div>
+
+<script>
+
+// Store
+const store = new Vuex.Store({
+	state: {
+		droits: [
+			{
+				departements: [],
+				regions: []
+			}
+		],
+	},
+	mutations: {
+		updateDroits(state, payload) {
+			let departements = payload['departements']
+			let regions = payload['regions']
+			state.droits.departements = []
+			for (i in departements) {
+				let departement = departements[i].fields
+				departement.Région = regions.filter(obj => obj.id == departement.Région)[0].fields
+				state.droits.departements.push(departement)
+			}
+		}
+	}
+})
+
+// Components
+const Droits = {
+	template: `
+		<div v-for="departement in droits.departements" >
+			{ "model": "fichiers_adherents.droits", "fields": { "name":"{{ departement.Nom }}", "query":"{'federation': {{ departement.Code }}}" }},
+		</div>
+	`,
+	//	{'federation__in': [8,10,51,52,54,55,57,67,68,88]}
+	computed: {
+		droits () {
+			return this.$store.state.droits
+		}
+	}
+}
+
+Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Départements?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
+	let departements = response.body.records
+	Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Régions?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
+		let regions = response.body.records
+		store.commit('updateDroits', {'departements': departements, 'regions': regions})
+	})
+})
+
+
+// App
+const app = new Vue({
+	el: '#app',
+	store,
+	components: { Droits },
+	template: `
+		<div class="app">
+			<droits></droits>
+		</div>
+	`
+})
+
+</script>
