@@ -29,7 +29,7 @@ const store = new Vuex.Store({
 	state: {
 		droits: {
 			departements: [],
-			regions: []
+			regions: [],
 		}
 	},
 	mutations: {
@@ -39,15 +39,14 @@ const store = new Vuex.Store({
 		updateRegions(state, payload) {
 			let departements = payload['departements']
 			let regions = payload['regions']
-			state.droits.region = [] // empties the list
+			state.droits.regions = [] // empties the list
 			for (i in regions) {
 				let region = regions[i]
 				for (i in region.fields.Départements) {
-					region.fields.Départements[i] = departements.filter(obj => obj.id == region.fields.Départements[i])
+					region.fields.Départements[i] = departements.filter(obj => obj.id == region.fields.Départements[i])[0]
 				}
 				state.droits.regions.push(region)
 			}
-			console.log(state.droits.regions)
 		}
 
 	}
@@ -72,7 +71,10 @@ const Droits = {
 				"model": "fichiers_adherents.droits",
 				"fields": {
 					"name":"{{ region.fields.Nom }}",
-					"query": "{'federation__in': <span v-for="departement in region.fields.Départements">{{ departement.id }},</span> }"
+					"query": "{'federation__in':
+						<span v-for="departement in region.fields.Départements" v-if="departement">
+							{{ departement.fields.Code }},
+						</span> }"
 				}
 			},
 		</div>
