@@ -27,35 +27,59 @@
 // Store
 const store = new Vuex.Store({
 	state: {
-		droits: [
-			{
-				departements: [],
-				regions: []
-			}
-		],
+		droits: {
+			departements: [],
+			regions: []
+		}
 	},
 	mutations: {
-		updateDroits(state, payload) {
+		updateDepartements(state, payload) {
+			state.droits.departements = payload['departements']
+		},
+		updateRegions(state, payload) {
 			let departements = payload['departements']
 			let regions = payload['regions']
-			state.droits.departements = []
-			for (i in departements) {
-				let departement = departements[i].fields
-				departement.Région = regions.filter(obj => obj.id == departement.Région)[0].fields
-				state.droits.departements.push(departement)
+			state.droits.region = [] // empties the list
+			for (i in regions) {
+				let region = regions[i]
+				for (i in region.fields.Départements) {
+					region.fields.Départements[i] = departements.filter(obj => obj.id == region.fields.Départements[i])
+				}
+				state.droits.regions.push(region)
 			}
+			console.log(state.droits.regions)
 		}
+
 	}
 })
 
 // Components
 const Droits = {
 	template: `
+	<div class="droits">
+	[
 		<div v-for="departement in droits.departements" >
-			{ "model": "fichiers_adherents.droits", "fields": { "name":"{{ departement.Nom }}", "query":"{'federation': {{ departement.Code }}}" }},
+			{
+				"model": "fichiers_adherents.droits",
+				"fields": {
+					"name":"{{ departement.fields.Nom }}",
+					"query":"{'federation': {{ departement.fields.Code }}}"
+				}
+			},
 		</div>
+		<div v-for="region in droits.regions" >
+			{
+				"model": "fichiers_adherents.droits",
+				"fields": {
+					"name":"{{ region.fields.Nom }}",
+					"query": "{'federation__in': <span v-for="departement in region.fields.Départements">{{ departement.id }},</span> }"
+				}
+			},
+		</div>
+	]
+	</div>
+
 	`,
-	//	{'federation__in': [8,10,51,52,54,55,57,67,68,88]}
 	computed: {
 		droits () {
 			return this.$store.state.droits
@@ -65,9 +89,10 @@ const Droits = {
 
 Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Départements?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
 	let departements = response.body.records
+	store.commit('updateDepartements', {'departements': departements})
 	Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Régions?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
 		let regions = response.body.records
-		store.commit('updateDroits', {'departements': departements, 'regions': regions})
+		store.commit('updateRegions', {'departements': departements, 'regions': regions})
 	})
 })
 
@@ -83,5 +108,11 @@ const app = new Vue({
 		</div>
 	`
 })
+
+
+
+
+
+//	{'federation__in': [8,10,51,52,54,55,57,67,68,88]}
 
 </script>
