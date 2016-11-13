@@ -71,10 +71,12 @@ const Droits = {
 				"model": "fichiers_adherents.droits",
 				"fields": {
 					"name":"{{ region.fields.Nom }}",
-					"query": "{'federation__in':
+					"query": "
+					{'federation__in':
 						<span v-for="departement in region.fields.Départements" v-if="departement">
 							{{ departement.fields.Code }},
-						</span> }"
+						</span>
+					}"
 				}
 			},
 		</div>
