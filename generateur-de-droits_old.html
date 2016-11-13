@@ -57,38 +57,26 @@ const Droits = {
 	template: `
 	<div class="droits">
 	[
-		<div class="comma-separated" v-for="departement in droits.departements" >
+		<div v-for="departement in droits.departements" >
 			{
 				"model": "fichiers_adherents.droits",
 				"fields": {
-					"name": "{{ departement.fields.Nom }}",
-					"query": {{ departement.fields.Code }}
+					"name":"{{ departement.fields.Nom }}",
+					"query":"{'federation': {{ departement.fields.Code }}}"
 				}
-			}
-			<span class="comma">,</span>
+			},
 		</div>
-
-		<div class="comma-separated" v-for="region in droits.regions" >
+		<div v-for="region in droits.regions" >
 			{
 				"model": "fichiers_adherents.droits",
 				"fields": {
 					"name":"{{ region.fields.Nom }}",
-					"query":
-						<span v-if="region.fields.Départements.length > 1">
-						[
-							<span class="comma-separated" v-for="departement in region.fields.Départements" v-if="departement">
-								{{ departement.fields.Code }}<span class="comma">,</span>
-							</span>
-						]
-						</span>
-						<span v-else>
-							<span class="comma-separated" v-for="departement in region.fields.Départements" v-if="departement">
-								{{ departement.fields.Code }}<span class="comma">,</span>
-							</span>
-						</span>
+					"query": "{'federation__in':
+						<span v-for="departement in region.fields.Départements" v-if="departement">
+							{{ departement.fields.Code }},
+						</span> }"
 				}
-			}
-			<span class="comma">,</span>
+			},
 		</div>
 	]
 	</div>
@@ -123,13 +111,10 @@ const app = new Vue({
 	`
 })
 
+
+
+
+
+//	{'federation__in': [8,10,51,52,54,55,57,67,68,88]}
+
 </script>
-
-<style>
-
-.comma-separated:nth-last-child(1) > .comma { visibility: hidden; }
-
-
-.comma-separated:nth-last-child(1) { color: red; font-weight: bold; }
-
-</style>
