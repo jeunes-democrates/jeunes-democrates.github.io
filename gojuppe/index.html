@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Générateur de visuels ! !">
+	<meta name="author" content="">
+
+	<meta property="og:title" content="GO JUPPÉ !">
+	<meta property="og:site_name" content="Les Jeunes Démocrates">
+	<meta property="og:description" content="Générateur de visuels !">
+	<meta property="og:image" content="juppefillon.jpg">
+
+	<title>GO JUPPÉ !</title>
+
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+	<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" type="text/css">
+
+</head>
+
+<body>
+
+	<div id="mainContainer" class="container" >
+
+		<h1>Générateur de visuels</h1>
+	
+		<hr>
+	
+		<form>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Mot-clé</div>
+					<input id="hashTagWriter" class="form-control" placeholder="LaPrimaire"></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Fillon</div>
+					<input id="quoteWriter1" class="form-control" placeholder="Projet de Fillon"></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Juppé</div>
+					<input id="quoteWriter2" class="form-control" placeholder="Projet de Juppé"></input>
+				</div>
+			</div>
+		</form>
+
+<!--		<button class="btn btn-secondary btn-block" onClick="refreshCanvas()">↻ Recharger</button>
+	-->
+		<hr>
+		
+		<div id="shareableVisual">
+		
+			<div id="background" style="background-image: url('juppefillon.jpg')"></div>
+		
+			<div id="hashTagBar">
+				<span id="hashTag">Laprimaire</span>
+			</div>
+
+			<div id="quoteBar1">
+				<span id="quote1" class="quote">Projet de Fillon !</span>
+			</div>
+
+			<div id="quoteBar2">
+				<span id="quote2" class="quote">Projet de Juppé !</span>
+			</div>
+
+			<div id="link">
+				<span>jeunes-democrates.org/gojuppé</span>
+			</div>
+
+		
+		</div>
+	
+		<a id="download" class="btn btn-primary btn-block btn-lg">
+			Télécharger la coolitude
+		</a>
+
+		<div class="input-group" style="margin: .5rem 0 3rem;">
+			<div class="input-group-addon">URL de partage</div>
+			<input id="shareUrl" type="text" class="form-control"
+				placeholder="http://..." readonly
+				onClick="this.setSelectionRange(0, this.value.length)"/>
+		</div>
+
+		<p style="text-align: center;">Attention, l'URL de partage sert à partager un visuel en cours de création, pas au partage sur les réseaux sociaux !</p>
+
+		<div id="alert"></div>
+
+	</div>
+
+</body>
+
+<style>
+#mainContainer { width: 1065px; max-width: 1065px; }
+h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
+#shareableVisual { position: relative; display: inline-block; overflow: hidden; margin: auto; }
+#background { width: 1035px; height: 512px; background-size: cover; background-position: center center; }
+#logo { position: absolute; right: 6em; bottom: 3em; height: 6em; }
+
+#hashTagBar { position: absolute; left: 7.2em; top: 0.65em; }
+#hashTag {
+	display: inline-block; padding: 0 .5em 0 1.7rem;
+	font-family: 'VT323'; font-size: 2.2em; color: #333; text-transform: uppercase;
+}
+#hashTag::before { content: '#'; position: absolute; top: -.05em; left: .5rem; }
+
+#quoteBar1 { position: absolute; bottom: .6em; left: 1.1em; height: 6.2em; width: 48%; }
+#quoteBar2 { position: absolute; bottom: .6em; left: 32.3em; height: 6.2em; width: 48%; }
+
+.quote { display: block; padding: .5rem 1rem; position: absolute; top: 50%; transform: translateY(-50%); color: #333; font-size: 1.4em; line-height: 1.1; font-family: 'VT323'; text-align: center; width: 100%; }
+
+#link { position: absolute; right: .8em; top: 0.2em; font-family: 'VT323'; opacity: .7;}
+
+
+
+</style>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+<script>
+
+var $quoteWriter1 = $('#quoteWriter1')
+	$quote1 = $('#quote1')
+$quoteWriter1.keyup(function(){
+	$quote1.text($quoteWriter1.val())
+	generateShareUrl()
+})
+
+var $quoteWriter2 = $('#quoteWriter2')
+	$quote2 = $('#quote2')
+$quoteWriter2.keyup(function(){
+	$quote2.text($quoteWriter2.val())
+	generateShareUrl()
+})
+
+var $hashTagWriter = $('#hashTagWriter')
+	$hashTag = $('#hashTag')
+$hashTagWriter.keyup(function(){
+	$hashTag.text($hashTagWriter.val())
+	generateShareUrl()
+})
+
+///////////////
+
+function refreshCanvas() {
+	html2canvas($('#shareableVisual')).then(function(canvas) {
+		var image = canvas.toDataURL("image/jpeg");
+		$('#download').attr({
+			'download': 'gojuppé.jpeg',
+			'href' : image
+		});
+	});
+}
+
+refreshCanvas()
+
+function readDataFromURL(url) {
+	if (typeof url.split('?$')[1] != 'undefined') {
+		var argumentStrings = url.split('?$')[1].split('&$')
+			argumentsFromUrl = readArguments(argumentStrings)
+		$.each(argumentsFromUrl, function(argumentType, argumentValue){
+			$('#'+argumentType+'Writer').val(argumentValue)
+			$('#'+argumentType).text(argumentValue)
+		})
+	}
+	generateShareUrl()
+}
+
+function readArguments(argumentStrings) {
+	var argumentTypes = ['quote1', 'quote2', 'hashTag']
+		result = {}
+	$.each(argumentStrings, function(i, argumentString){
+		// For each argument passed through the URL, add it to the result object
+		$.each(argumentTypes, function(j, argumentType){
+			var split = argumentString.split(argumentType + '=')
+			if (split[1]) result[argumentType] = decodeURI(split[1])
+		})
+	})
+	return result
+}
+
+function generateShareUrl() {
+	var url =
+		window.location.origin + window.location.pathname +
+		'?$quote1=' + $('#quoteWriter1').val() +
+		'?$quote2=' + $('#quoteWriter2').val() +
+		'&$hashTag=' + $('#hashTagWriter').val()
+	$('#shareUrl').val(encodeURI(url))
+}
+
+readDataFromURL(window.location.href)
+
+</script>
+
+<footer style="margin-top: 3em; text-align: center;" >
+<p style="font-size: .8em; color: #999">Fabriqué avec ❤ par Antonin<br/>En cas de problème, passez moi un <a href="https://www.messenger.com/t/antonin.grele">message</a> !</p>
+</footer>
+
+</body>
+
+</html>
