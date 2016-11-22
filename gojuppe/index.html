@@ -137,6 +137,7 @@ var $quoteWriter1 = $('#quoteWriter1')
 $quoteWriter1.keyup(function(){
 	$quote1.text($quoteWriter1.val())
 	generateShareUrl()
+	refreshCanvas()
 })
 
 var $quoteWriter2 = $('#quoteWriter2')
@@ -144,6 +145,7 @@ var $quoteWriter2 = $('#quoteWriter2')
 $quoteWriter2.keyup(function(){
 	$quote2.text($quoteWriter2.val())
 	generateShareUrl()
+	refreshCanvas()
 })
 
 var $hashTagWriter = $('#hashTagWriter')
@@ -151,6 +153,7 @@ var $hashTagWriter = $('#hashTagWriter')
 $hashTagWriter.keyup(function(){
 	$hashTag.text($hashTagWriter.val())
 	generateShareUrl()
+	refreshCanvas()
 })
 
 ///////////////
