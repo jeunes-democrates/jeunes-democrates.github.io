@@ -53,7 +53,7 @@
 }
 .organigramme__membre__info { margin-top: -.5em; }
 .organigramme__membre__name { font-size: 1.1em; text-transform: uppercase; }
-.organigramme__membre__titre { margin-bottom: .25em; color: #666; }
+.organigramme__membre__titre { color: #666; }
 .small .organigramme__membre__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
 .small .organigramme__membre__name { font-size: 1em; }
 .small .organigramme__membre__titre { font-size: .7em; }
@@ -74,7 +74,7 @@
 
 .organigramme__bouton:active { transform: translateY(1px); }
 
-.organigramme__bouton:hover { background-color: #b34300; transition: background-color .1s ease-in-out; }
+.organigramme__bouton:hover { background-color: #b34300; color: white; text-decoration: none; transition: background-color .1s ease-in-out; }
 
 .organigramme__pole__header .organigramme__bouton { background-color: #cd4c00; }
 .organigramme__pole__header .organigramme__bouton:hover { background-color: #b34300; }
