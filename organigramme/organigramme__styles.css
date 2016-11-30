@@ -1,0 +1,85 @@
+.organigramme__column-wrapper {
+	-webkit-column-break-inside: avoid;
+	          page-break-inside: avoid;
+	               break-inside: avoid;
+	padding: .001em; /* hack to make sure the columns wrap properly */
+}
+
+/* Organigramme du bureau */
+.organigramme__poles {
+	columns: 22rem 4;
+	-moz-columns: 22rem 4;
+	-webkit-columns: 22rem 4;
+}
+.organigramme__poles hr { border-top: 1px solid #ccc; }
+.organigramme__pole {
+	font-family: 'Roboto Slab', 'Century Gothic', sans-serif;
+	font-size: 1.2em; line-height: 1.5;
+	margin-bottom: .85em;
+	background-color: #fafafa;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.organigramme__pole__header {
+	text-align: center; font-size: 1.4em; padding: .5em 1.5em;
+	background-color: #FF6000; border-top-right-radius: 4px; border-top-left-radius: 4px;
+	color: white;
+}
+.organigramme__pole__name { font-size: 1.1em; font-family: "Bad Script", sans-serif; }
+.organigramme__pole__email { position: relative; bottom: .5em; }
+.organigramme__pole__email::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
+
+.organigramme__pole hr { opacity: .1; }
+
+.organigramme__membres {
+	padding: 1em;
+}
+
+.organigramme__membre {
+	font-size: .8em;
+	padding: .25em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+
+.organigramme__membre__photo {
+	width: 5.5em; height: 5.5em; max-width: 5.5em; max-height: 5.5em; margin-right: 1em; border-radius: 5em; border: .25em solid #ccc;
+	background-color: #ccc; background-size: cover; background-position: top;
+}
+.organigramme__membre__info { margin-top: -.5em; }
+.organigramme__membre__name { font-size: 1.1em; text-transform: uppercase; }
+.organigramme__membre__titre { margin-bottom: .25em; color: #666; }
+.small .organigramme__membre__photo { width: 4.5em; height: 4.5em; margin-right: 1.5em; margin-left: .5em; }
+.small .organigramme__membre__name { font-size: 1em; }
+.small .organigramme__membre__titre { font-size: .7em; }
+
+.organigramme__membre:after { content: ""; display: table; clear: both; }
+.organigramme__membre__liens { display: block; min-width: 1em; }
+.organigramme__membre__liens a::before { font-family: 'FontAwesome'; margin-right: .5em; }
+.organigramme__email::before { content: '\f0e0'; }
+.organigramme__twitter::before { content: '\f099'; }
+
+.organigramme__bouton {
+	display: inline-block; border-radius: 4px; padding: .3em .6em;
+	background-color: #ff6000; color: white; opacity: .7;
+	text-decoration: none;
+	font-size: .55em;
+	transition: all .25s;
+}
+
+.organigramme__bouton:active { transform: translateY(1px); }
+
+.organigramme__bouton:hover { background-color: #cd4c00; transition: background-color .1s ease-in-out; }
+
+.organigramme__pole__header .organigramme__bouton { background-color: #e65600; }
+.organigramme__pole__header .organigramme__bouton:hover { background-color: #cd4c00; }
+
+.slideUp {
+	animation-name: slideUp; animation-duration: 1s; animation-timing-function: ease;
+	-webkit-animation-name: slideUp; -webkit-animation-duration: 1s; -webkit-animation-timing-function: ease;
+}
+@keyframes slideUp { 0% { transform: translateY(10%); opacity: 0; } 100% { transform: translateY(0%); opacity: 1; } }
+@-webkit-keyframes slideUp { 0% { -webkit-transform: translateY(10%); opacity: 0; } 100% { -webkit-transform: translateY(0%); opacity: 1; }	}
+
