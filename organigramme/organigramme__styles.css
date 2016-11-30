@@ -74,10 +74,10 @@
 
 .organigramme__bouton:active { transform: translateY(1px); }
 
-.organigramme__bouton:hover { background-color: #cd4c00; transition: background-color .1s ease-in-out; }
+.organigramme__bouton:hover { background-color: #b34300; transition: background-color .1s ease-in-out; }
 
-.organigramme__pole__header .organigramme__bouton { background-color: #e65600; }
-.organigramme__pole__header .organigramme__bouton:hover { background-color: #cd4c00; }
+.organigramme__pole__header .organigramme__bouton { background-color: #cd4c00; }
+.organigramme__pole__header .organigramme__bouton:hover { background-color: #b34300; }
 
 .slideUp {
 	animation-name: slideUp; animation-duration: 1s; animation-timing-function: ease;
