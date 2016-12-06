@@ -41,7 +41,7 @@ function organigrammeSetup() {
 	
 					<div class="organigramme__pole__header">
 						<div class="organigramme__pole__name">{{ pole.Name }}</div>
-						<a class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter</a>
+						<a class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter ></a>
 					</div>
 					
 					<div class="organigramme__membres">
@@ -63,6 +63,8 @@ function organigrammeSetup() {
 	
 				</div>
 				</div>
+
+				<div class="spinner hide-if-not-first"></div>
 	
 			</div>
 		`,

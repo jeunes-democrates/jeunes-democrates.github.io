@@ -26,11 +26,25 @@
 .organigramme__pole__header {
 	text-align: center; font-size: 1.1em; padding: .5em 1.5em;
 	background-color: #FF6000; border-top-right-radius: 4px; border-top-left-radius: 4px;
-	color: white;
+	color: white; position: relative;
 }
-.organigramme__pole__name { font-size: 1.1em; font-family: "Bad Script", sans-serif; }
-.organigramme__pole__email { position: relative; bottom: .5em; }
-.organigramme__pole__email::before { content: '\f1d8'; font-family: 'FontAwesome'; margin-right: .5em; }
+.organigramme__pole__name { font-size: 1; font-family: "Bad Script", sans-serif; }
+.organigramme__bouton.organigramme__pole__email {
+	position: absolute;
+	width: ;
+	right: 0;
+	top: 0;
+	height: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	border-top-left-radius: 0px; border-bottom-left-radius: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 8em;
+}
+.organigramme__bouton.organigramme__pole__email:active { transform: translateY(0px); background-color: #b34300; }
+
 
 .organigramme__pole hr { opacity: .1; }
 
@@ -76,8 +90,10 @@
 
 .organigramme__bouton:hover { background-color: #b34300; color: white; text-decoration: none; transition: background-color .1s ease-in-out; }
 
-.organigramme__pole__header .organigramme__bouton { background-color: #cd4c00; }
-.organigramme__pole__header .organigramme__bouton:hover { background-color: #b34300; }
+.organigramme__pole__header .organigramme__bouton { background-color: none; }
+.organigramme__pole__header .organigramme__bouton:hover { background-color: #cd4c00; }
+
+.hide-if-not-first:not(:first-child) { display: none; }
 
 .slideUp {
 	animation-name: slideUp; animation-duration: 1s; animation-timing-function: ease;
@@ -86,3 +102,32 @@
 @keyframes slideUp { 0% { transform: translateY(10%); opacity: 0; } 100% { transform: translateY(0%); opacity: 1; } }
 @-webkit-keyframes slideUp { 0% { -webkit-transform: translateY(10%); opacity: 0; } 100% { -webkit-transform: translateY(0%); opacity: 1; }	}
 
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+  background-color: #333;
+
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
