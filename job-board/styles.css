@@ -1,0 +1,105 @@
+/* Hide header image on this page */
+.tc-single-post-thumbnail-wrapper { display: none; }
+
+.jobboard__column-wrapper {
+	-webkit-column-break-inside: avoid;
+	          page-break-inside: avoid;
+	               break-inside: avoid;
+	padding: .001em; /* hack to make sure the columns wrap properly */
+}
+
+/* jobboard du bureau */
+.jobboard__jobs {
+	columns: 22rem 4;
+	-moz-columns: 22rem 4;
+	-webkit-columns: 22rem 4;
+}
+.jobboard__job hr { border-top: 1px solid #ccc; }
+
+.jobboard__job {
+	line-height: 1.5;
+	margin-bottom: .85em;
+	background-color: #fafafa;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.jobboard__job__header {
+	text-align: left; font-size: 1.1em; padding: .5em 1.5em;
+	background-color: #FF6000; border-top-right-radius: 4px; border-top-left-radius: 4px;
+	color: white; position: relative;
+}
+
+.jobboard__job__apply {
+	padding: .3em .6em;
+/*	background-color: #ccc; color: white; opacity: .7; */
+	border: 1px solid #333;
+	color: inherit;
+	text-decoration: none;
+	font-size: .75em;
+	transition: all .35s;
+	right: 0;
+	top: 0;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	border-radius: 4px;
+	text-align: center;
+	text-transform: uppercase;
+	display: block;
+	margin-top: 1em;
+}
+
+.jobboard__job__apply:hover { background-color: #eee; }
+.jobboard__job__apply:active { background-color: #ccc; }
+
+.jobboard__jobs hr { opacity: .1; }
+
+.jobboard__job__name { font-size: 1.1em; text-transform: uppercase; }
+.jobboard__job__body { padding: 1em; }
+.jobboard__job__description { color: #333; }
+
+.jobboard__membre:after { content: ""; display: table; clear: both; }
+.jobboard__membre__liens { display: block; min-width: 1em; }
+.jobboard__membre__liens a::before { font-family: 'FontAwesome'; margin-right: .5em; }
+.jobboard__email::before { content: '\f0e0'; }
+.jobboard__twitter::before { content: '\f099'; }
+
+.hide-if-not-first:not(:first-child) { display: none; }
+
+.slideUp {
+	animation-name: slideUp; animation-duration: 1s; animation-timing-function: ease;
+	-webkit-animation-name: slideUp; -webkit-animation-duration: 1s; -webkit-animation-timing-function: ease;
+}
+@keyframes slideUp { 0% { transform: translateY(10%); opacity: 0; } 100% { transform: translateY(0%); opacity: 1; } }
+@-webkit-keyframes slideUp { 0% { -webkit-transform: translateY(10%); opacity: 0; } 100% { -webkit-transform: translateY(0%); opacity: 1; }	}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+  background-color: #333;
+
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}

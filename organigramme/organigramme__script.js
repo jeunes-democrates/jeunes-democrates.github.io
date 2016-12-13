@@ -7,7 +7,6 @@ function organigrammeSetup() {
 		mutations: {
 			updatePoles(state, payload) {
 				let poles = payload['poles']
-				window.potato = poles
 				let members = payload['members']
 				state.poles = []
 				for (i in poles) {
