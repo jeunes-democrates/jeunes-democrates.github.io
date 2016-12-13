@@ -32,7 +32,6 @@
 
 .jobboard__job__apply {
 	padding: .3em .6em;
-/*	background-color: #ccc; color: white; opacity: .7; */
 	border: 1px solid #333;
 	color: inherit;
 	text-decoration: none;
@@ -58,6 +57,8 @@
 .jobboard__job__name { font-size: 1.1em; line-height: 1.1; }
 .jobboard__job__body { padding: 1em; }
 .jobboard__job__description { color: #333; }
+.jobboard__job__description > :first-child { margin-top: 0; }
+
 
 .jobboard__membre:after { content: ""; display: table; clear: both; }
 .jobboard__membre__liens { display: block; min-width: 1em; }
