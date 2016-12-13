@@ -27,7 +27,7 @@ function vueSetup() {
 					
 					<div class="jobboard__job__body">
 						<div class="jobboard__job__description">{{ job.Description }}</div>
-						<a class="jobboard__job__apply" v-bind:href="'mailto:' + job.Email">Postuler</a>
+						<a class="jobboard__job__apply" v-bind:href="'http://jeunes-democrates.org/candidater-a-un-poste/?poste=' + encodeURI(job.Name)">Postuler</a>
 					</div>
 	
 				</div>

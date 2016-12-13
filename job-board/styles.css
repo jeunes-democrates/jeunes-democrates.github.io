@@ -55,7 +55,7 @@
 
 .jobboard__jobs hr { opacity: .1; }
 
-.jobboard__job__name { font-size: 1.1em; text-transform: uppercase; }
+.jobboard__job__name { font-size: 1.1em; line-height: 1.1; }
 .jobboard__job__body { padding: 1em; }
 .jobboard__job__description { color: #333; }
 
