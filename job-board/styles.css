@@ -50,7 +50,7 @@
 	margin-top: 1em;
 }
 
-.jobboard__job__apply:hover { background-color: #eee; }
+.jobboard__job__apply:hover { background-color: #eee; color: inherit; text-decoration: inherit; }
 .jobboard__job__apply:active { background-color: #ccc; }
 
 .jobboard__jobs hr { opacity: .1; }
