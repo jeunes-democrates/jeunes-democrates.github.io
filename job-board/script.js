@@ -1,6 +1,6 @@
 function vueSetup() {
 	// Store
-	const store = new Vuex.Store({
+	var store = new Vuex.Store({
 		state: {
 			jobs: [],
 		},
@@ -14,7 +14,7 @@ function vueSetup() {
 
 
 	// Components
-	const JobBoard = {
+	var JobBoard = {
 		template: `
 			<div class="jobboard__jobs" lang="fr">
 
@@ -45,13 +45,13 @@ function vueSetup() {
 	}
 	
 	Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Postes ouverts?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
-		let jobs = airTable(response.body.records)
+		var jobs = airTable(response.body.records)
 		store.commit('updateJobs', jobs)
 	})
 	
 	
 	// App
-	const app = new Vue({
+	var app = new Vue({
 		el: '#app',
 		store,
 		components: { 'job-board': JobBoard },
@@ -63,18 +63,18 @@ function vueSetup() {
 	})
 }
 
-const airTable = function(object) {
+var airTable = function(object) {
 	// AirTable objects have a "field" property which contains their actual data
 	// This is to clean up the airtable objects
 	try {
 		if (object.constructor === Array) {
 			for (i in object) {
-				let airTableId = object[i].id
+				var airTableId = object[i].id
 				object[i] = object[i].fields
 				object[i].airTableId = airTableId
 			} 
 		} else {
-			let airTableId = object.id
+			var airTableId = object.id
 			object = object.fields
 			object.airTableId = airTableId
 		}
