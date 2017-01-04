@@ -2,9 +2,9 @@ function vueSetup() {
 	// Store
 	window.store = new Vuex.Store({
 		state: {
-			newsletter: {
-				'titre' : 'Pas de titre',
-				'date' : 'Pas de date'
+			'newsletter': {
+				'meta' : false,
+				'edito' : false
 			}
 		},
 		mutations: {
@@ -17,66 +17,83 @@ function vueSetup() {
 		}
 	})
 
-
-	// Components
-	var JobBoard = {
-		template: `
-			<div class="jobboard__jobs" lang="fr">
-
-				<div class="jobboard__column-wrapper" v-for="job in jobs">
-				<div class="jobboard__job slideUp">
-	
-					<div class="jobboard__job__header">
-						<div class="jobboard__job__name">{{ job.Name }}</div>
-					</div>
-					
-					<div class="jobboard__job__body">
-						<div class="jobboard__job__description" v-html="marked(job.Description)"></div>
-						<a class="jobboard__job__apply" :href="'http://jeunes-democrates.org/candidater-a-un-poste/?poste=' + encodeURI(job.Name)">Postuler</a>
-					</div>
-	
-				</div>
-				</div>
-
-				<div class="spinner hide-if-not-first"></div>
-	
-			</div>
-		`,
-		computed: {
-			jobs () {
-				return this.$store.state.jobs
-			}
-		}
-	}
-	
 	Vue.http.get(airTableListEndpoint('Newsletters')).then((response) => {
-		var records = response.body.records
-		var newsletter = airTableData(records)[records.length-1]
-		store.commit('updateNewsletter', {'titre': newsletter.Titre, 'date': newsletter.Date})
+		var newsletter = airTableData(response.body.records)[response.body.records.length-1]
+		store.commit('updateNewsletter', {'meta': newsletter})
 		if (newsletter.hasOwnProperty('Edito')) {
 			Vue.http.get(airTableItemEndpoint('Editos', newsletter.Edito)).then((response) => {
-				console.log(response.body.records)
-//				store.commit('updateNewsletter', {'edito': Edito})
+				var edito = airTableData(response.body)
+				edito.Texte = marked(edito.Texte)
+				store.commit('updateNewsletter', {'edito': edito})
 			})
 		}
-//		Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Editos?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
-//			let edito = response.body.records
-//			store.commit('updatePoles', {'poles': poles, 'members': members})
-//		})
-	
 	})
 	
 	// App
 	var app = new Vue({
-		el: '#app',
+		el: '.newsletter',
 		store,
-		components: { 'job-board': JobBoard },
+//		components: { 'newsletter': Newsletter },
 		template: `
-			<div class="app">
-				<job-board></job-board>
+
+			<div class="newsletter" lang="fr">
+
+			<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+			<tr>
+				<td>
+				<table cellpadding="14px" cellspacing="0" border="0" align="center">
+
+					<tr class="newsletter__logo">
+						<td width="648" valign="top">
+							<table style="
+								text-align: center;
+								font-family: 'Century Gothic', Futura, Verdana, sans-serif;
+								line-height: 1;
+								font-size: 42px;
+								display: inline-block;
+							">
+								<tr>
+									<td style="background-color:#ff6000;color:white;text-align:right;vertical-align:bottom;padding-top:.5rem;padding-right:.25rem;padding-left:.1rem;min-height:2.7rem;">
+										J<br>DEM
+									</td>
+									<td style="color:#ff6000;text-align:left;vertical-align:bottom;padding-top:.5rem;padding-left:.05rem;width:4.8rem;min-height:2.7rem;">
+										EUNES<br>OCRATES
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<tr class="newsletter__header" v-if="newsletter.meta">
+						<td width="600" valign="top">
+							<p>{{ newsletter.meta.Titre }}</p>
+							<p>{{ newsletter.meta.Date }}</p>
+						</td>
+					</tr>
+
+					<tr class="edito" v-if="newsletter.edito">
+						<td width="600" valign="top">
+							<div v-html="newsletter.edito.Texte"></div>
+						</td>
+					</tr>
+
+				</table>
+				</td>
+			</tr>
+			</table>
+
 			</div>
-		`
+
+
+			
+		`,
+		computed: {
+			newsletter () {
+				return this.$store.state.newsletter
+			}
+		}
 	})
+
 }
 
 var airTableData = function(object) {
