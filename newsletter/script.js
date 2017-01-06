@@ -41,38 +41,74 @@ function vueSetup() {
 			<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
 			<tr>
 				<td>
-				<table cellpadding="14px" cellspacing="0" border="0" align="center">
+				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+					font-family: 'Trebuchet MS', Helvetica, sans-serif;
+					line-height: 24px;
+					color: #333;
+				">
 
 					<tr class="newsletter__logo">
-						<td width="648" valign="top">
+						<td valign="top" width="287px">
 							<table style="
 								text-align: center;
 								font-family: 'Century Gothic', Futura, Verdana, sans-serif;
 								line-height: 1;
 								font-size: 42px;
 								display: inline-block;
-							">
+								margin-top: 14px;
+								">
 								<tr>
-									<td style="background-color:#ff6000;color:white;text-align:right;vertical-align:bottom;padding-top:.5rem;padding-right:.25rem;padding-left:.1rem;min-height:2.7rem;">
+									<td style="
+									background-color:#ff6000;
+									color:white;
+									text-align:right;
+									vertical-align:bottom;
+									padding-top:8px;
+									padding-right:2px;
+									padding-left:1px;
+									">
 										J<br>DEM
 									</td>
-									<td style="color:#ff6000;text-align:left;vertical-align:bottom;padding-top:.5rem;padding-left:.05rem;width:4.8rem;min-height:2.7rem;">
+									<td style="
+										color:#ff6000;
+										text-align:left;
+										vertical-align:bottom;
+										padding-top:8px;
+										padding-left:1px;
+										width:77px;
+										">
 										EUNES<br>OCRATES
 									</td>
 								</tr>
 							</table>
 						</td>
-					</tr>
-
-					<tr class="newsletter__header" v-if="newsletter.meta">
-						<td width="600" valign="top">
-							<p>{{ newsletter.meta.Titre }}</p>
+						<td valign="top" style="text-align: right; color: #999;">
 							<p>{{ newsletter.meta.Date }}</p>
 						</td>
 					</tr>
+				</table>
+				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+					font-family: 'Trebuchet MS', Helvetica, sans-serif;
+					line-height: 24px;
+					color: #333;
+				">
+					<tr>
+						<td valign="top">
+							<img src="" />
+						</td>
+					</tr>
+
+				</table>
+				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+					font-family: 'Trebuchet MS', Helvetica, sans-serif;
+					line-height: 24px;
+					color: #333;
+				">
+					<tr class="newsletter__header" v-if="newsletter.meta">
+					</tr>
 
 					<tr class="edito" v-if="newsletter.edito">
-						<td width="600" valign="top">
+						<td valign="top">
 							<div v-html="newsletter.edito.Texte"></div>
 						</td>
 					</tr>
