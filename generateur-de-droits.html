@@ -35,6 +35,8 @@ const store = new Vuex.Store({
 	mutations: {
 		updateDepartements(state, payload) {
 			state.droits.departements = payload['departements']
+			// Classe les départements par ordre de numéro
+			state.droits.departements = state.droits.departements.sort(function(a, b) { return parseInt(a.fields.Code) > parseInt(b.fields.Code) })
 		},
 		updateRegions(state, payload) {
 			let departements = payload['departements']
@@ -48,7 +50,6 @@ const store = new Vuex.Store({
 				state.droits.regions.push(region)
 			}
 		}
-
 	}
 })
 
@@ -126,6 +127,8 @@ Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Départements?api_ke
 		store.commit('updateRegions', {'departements': departements, 'regions': regions})
 	})
 })
+
+
 
 
 // App
