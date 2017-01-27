@@ -68,7 +68,7 @@ const Droits = {
 			<span class="comma">,</span>
 		</div>
 
-		<div class="comma-separated" v-for="region in droits.regions" >
+		<div v-for="region in droits.regions" >
 			{
 				"model": "fichiers_adherents.droits",
 				"fields": {
@@ -90,6 +90,23 @@ const Droits = {
 			}
 			<span class="comma">,</span>
 		</div>
+
+		<div>
+			{
+				"model": "fichiers_adherents.droits",
+				"fields": {
+					"name": "[Fichier Entier]",
+					"query":
+						[
+							<span class="comma-separated" v-for="departement in droits.departements">
+								{{ departement.fields.Code }}<span class="comma">,</span>
+							</span>
+						]
+				}
+			}
+			<span class="comma">,</span>
+		</div>
+
 	]
 	</div>
 
