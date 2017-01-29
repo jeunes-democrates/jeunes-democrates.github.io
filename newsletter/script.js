@@ -17,12 +17,15 @@ function vueSetup() {
 		}
 	})
 
-	Vue.http.get(airTableListEndpoint('Newsletters')).then((response) => {
-		var newsletter = airTableData(response.body.records)[response.body.records.length-1]
+	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
+
+	Vue.http.get(_airTable.ListEndpoint('Newsletters')).then((response) => {
+		var newsletter = _airTable.Clean(response.body.records)[response.body.records.length-1]
 		store.commit('updateNewsletter', {'meta': newsletter})
+
 		if (newsletter.hasOwnProperty('Edito')) {
-			Vue.http.get(airTableItemEndpoint('Editos', newsletter.Edito)).then((response) => {
-				var edito = airTableData(response.body)
+			Vue.http.get(_airTable.ItemEndpoint('Editos', newsletter.Edito)).then((response) => {
+				var edito = _airTable.Clean(response.body)
 				edito.Texte = marked(edito.Texte)
 				store.commit('updateNewsletter', {'edito': edito})
 			})
@@ -41,6 +44,56 @@ function vueSetup() {
 			<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
 			<tr>
 				<td>
+
+
+				<!-- Header -->
+				<table cellpadding="0" cellspacing="0" border="0" align="center" width="582" style="
+					font-family: 'Trebuchet MS', Helvetica, sans-serif;
+					line-height: 24px;
+					color: #333;
+				">
+
+					<tr>
+						<td valign="top" width="263px" style="color: white;">
+							Bonne année 2017 !
+						</td>
+						<td valign="top" width="263px" style="text-align: right; color: #999;">
+							<!-- empty -->
+						</td>
+					</tr>
+				</table>
+
+
+
+				<!-- Illustration -->
+				<table v-if="newsletter.meta.Illustration" cellpadding="0" cellspacing="0" border="0" align="center" width="610">
+
+					<tr>
+						<td>
+							<img :src="newsletter.meta.Illustration[0].url" width="610" />
+						</td>
+					</tr>
+
+				</table>
+
+
+
+				<!-- Edito -->
+				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+					font-family: 'Trebuchet MS', Helvetica, sans-serif;
+					line-height: 24px;
+					color: #333;
+				">
+					<tr class="edito" v-if="newsletter.edito">
+						<td valign="top">
+							<div v-html="newsletter.edito.Texte"></div>
+						</td>
+					</tr>
+
+				</table>
+
+
+				<!-- Logo et date-->
 				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
 					font-family: 'Trebuchet MS', Helvetica, sans-serif;
 					line-height: 24px;
@@ -48,6 +101,9 @@ function vueSetup() {
 				">
 
 					<tr class="newsletter__logo">
+						<td valign="top" width="287px" style="text-align: right; color: #999;">
+							<p>{{ newsletter.meta.Date }}</p>
+						</td>
 						<td valign="top" width="287px">
 							<table style="
 								text-align: center;
@@ -82,38 +138,11 @@ function vueSetup() {
 								</tr>
 							</table>
 						</td>
-						<td valign="top" style="text-align: right; color: #999;">
-							<p>{{ newsletter.meta.Date }}</p>
-						</td>
 					</tr>
 				</table>
-				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
-					font-family: 'Trebuchet MS', Helvetica, sans-serif;
-					line-height: 24px;
-					color: #333;
-				">
-					<tr>
-						<td valign="top">
-							<img src="" />
-						</td>
-					</tr>
 
-				</table>
-				<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
-					font-family: 'Trebuchet MS', Helvetica, sans-serif;
-					line-height: 24px;
-					color: #333;
-				">
-					<tr class="newsletter__header" v-if="newsletter.meta">
-					</tr>
 
-					<tr class="edito" v-if="newsletter.edito">
-						<td valign="top">
-							<div v-html="newsletter.edito.Texte"></div>
-						</td>
-					</tr>
 
-				</table>
 				</td>
 			</tr>
 			</table>
@@ -130,44 +159,4 @@ function vueSetup() {
 		}
 	})
 
-}
-
-var airTableData = function(object) {
-	// AirTable objects have a "field" property which contains their actual data
-	// This is to clean up the airtable objects
-	try {
-		if (object.constructor === Array) {
-			for (i in object) {
-				var airTableId = object[i].id
-				object[i] = object[i].fields
-				object[i].airTableId = airTableId
-			} 
-		} else {
-			var airTableId = object.id
-			object = object.fields
-			object.airTableId = airTableId
-		}
-		return object
-	} catch (err) {
-		console.error(err.message)
-		return false
-	}
-}
-
-var airTableListEndpoint = function(table, params) {
-	// e.g. : airTableListEndpoint('Newsletters', {'maxRecords': 1})
-	var apiKey = 'keyQ9LAVuNmhIIhjN'
-	var appKey = 'appHznRjE909j9VlP'
-	var paramString = ''
-	for (var param in params) {
-		paramString += '&' + param + '=' + params[param]
-	}
-	return 'https://api.airtable.com/v0/' + appKey + '/' + table + '?api_key=' + apiKey + paramString
-}
-
-var airTableItemEndpoint = function(table, id) {
-	// e.g. : airTableItemEndpoint('Newsletters', 'recKbCev6uCTnLFdU')
-	var apiKey = 'keyQ9LAVuNmhIIhjN'
-	var appKey = 'appHznRjE909j9VlP'
-	return 'https://api.airtable.com/v0/' + appKey + '/' + table + '/' + id + '?api_key=' + apiKey
 }
