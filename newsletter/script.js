@@ -3,9 +3,10 @@ function vueSetup() {
 	window.store = new Vuex.Store({
 		state: {
 			'newsletter': {
-				'meta' : false,
-				'edito' : false,
-				'articles' : []
+				'meta': false,
+				'edito': false,
+				'articles': [],
+				'commissions': []
 			}
 		},
 		mutations: {
@@ -37,6 +38,11 @@ function vueSetup() {
 	Vue.http.get(_airTable.ListEndpoint('Actus')).then((response) => {
 		var actus = _airTable.Clean(response.body.records).slice(0,3) // get first 3 actus
 		store.commit('updateNewsletter', {'actus': actus})
+	})
+
+	Vue.http.get(_airTable.ListEndpoint('Commissions')).then((response) => {
+		var commissions = _airTable.Clean(response.body.records).slice(2,5) // get first 3 actus
+		store.commit('updateNewsletter', {'commissions': commissions})
 	})
 
 Vue.component('newsletter-header', {
@@ -149,7 +155,7 @@ Vue.component('newsletter-actu', {
 	template: `
 		<td class="actu" valign="top">
 			<div v-html="actu.Titre"></div>
-			<img :src="actu.Illustration[0].thumbnails.large.url" width=156 />
+			<img :src="actu.Illustration[0].thumbnails.large.url" width=180 />
 		</td>
 	`
 })
@@ -157,13 +163,13 @@ Vue.component('newsletter-actu', {
 Vue.component('newsletter-actus', {
 	props: ['actus'],
 	template: `
-		<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+		<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
 			font-family: 'Trebuchet MS', Helvetica, sans-serif;
 			line-height: 18px;
 			font-size: 14px;
 			color: #333;
 		">
-			<tr><td colspan="3"><h2>Publications récentes</h2></td><tr>
+			<tr><td colspan="3"><h2>Nos publications récentes</h2></td><tr>
 			<tr class="actus" v-if="actus">
 				<newsletter-actu :actu="actus[0]"></newsletter-actu>
 				<newsletter-actu :actu="actus[1]"></newsletter-actu>
@@ -173,6 +179,38 @@ Vue.component('newsletter-actus', {
 		</table>
 	`
 })
+
+
+Vue.component('newsletter-commission', {
+	props: ['commission'],
+	template: `
+		<td class="commission" valign="top">
+			<div v-html="commission.Titre"></div>
+			<img :src="commission.Illustration[0].thumbnails.large.url" width=180 />
+		</td>
+	`
+})
+
+Vue.component('newsletter-commissions', {
+	props: ['commissions'],
+	template: `
+		<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
+			font-family: 'Trebuchet MS', Helvetica, sans-serif;
+			line-height: 18px;
+			font-size: 14px;
+			color: #333;
+		">
+			<tr><td colspan="3"><h2>Commissions projet</h2></td><tr>
+			<tr class="commissions" v-if="commissions">
+				<newsletter-commission :commission="commissions[0]"></newsletter-commission>
+				<newsletter-commission :commission="commissions[1]"></newsletter-commission>
+				<newsletter-commission :commission="commissions[2]"></newsletter-commission>
+			</tr>
+
+		</table>
+	`
+})
+
 
 	// App
 	var app = new Vue({
@@ -202,6 +240,12 @@ Vue.component('newsletter-actus', {
 				<newsletter-actus
 					:actus="newsletter.actus"
 					></newsletter-actus>
+
+				<hr/>
+
+				<newsletter-commissions
+					:commissions="newsletter.commissions"
+					></newsletter-commissions>
 
 				</td>
 			</tr>
