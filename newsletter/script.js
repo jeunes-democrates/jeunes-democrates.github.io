@@ -36,7 +36,11 @@ function vueSetup() {
 	})
 	
 	Vue.http.get(_airTable.ListEndpoint('Actus')).then((response) => {
-		var actus = _airTable.Clean(response.body.records).slice(0,3) // get first 3 actus
+		var actus = _airTable.Clean(response.body.records) // get first 3 actus
+		actus = actus.filter(function( actu ) {
+			return !actu.hasOwnProperty('Exclure');
+		})
+		actus = actus.slice(0,3)
 		store.commit('updateNewsletter', {'actus': actus})
 	})
 
@@ -44,6 +48,7 @@ function vueSetup() {
 		console.log(response)
 		var commissions = _airTable.Clean(response.body.records)
 		commissions.sort(function(a, b) { return a.Ordre > b.Ordre })
+		commissions = commissions.slice(0,3)
 		store.commit('updateNewsletter', {'commissions': commissions})
 	})
 
@@ -167,19 +172,21 @@ Vue.component('newsletter-actus', {
 			<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
 				font-family: 'Trebuchet MS', Helvetica, sans-serif;
 				line-height: 18px;
-				font-size: 14px;
+				font-size: 16px;
 				color: #333;
 				">
 				<tr><td colspan="3"><h2>Nos publications récentes</h2></td><tr>
 				<tr class="actus">
 					<td valign="top" v-for="actu in actus">
-						<img :src="actu.Illustration[0].thumbnails.large.url" width=180 />
+						<a :href="actu.Lien">
+							<img :src="actu.Illustration[0].thumbnails.large.url" width=180 />
+						</a>
 					</td>
 				</tr>
 				<tr class="actus">
 					<td valign="top" v-for="actu in actus">
 						<a :href="actu.Lien">
-							<strong v-html="actu.Titre" style="color: rgb(51, 51, 51);"></strong>
+							<span v-html="actu.Titre"></span>
 						</a>
 					</td>
 				</tr>
@@ -196,23 +203,22 @@ Vue.component('newsletter-commissions', {
 			<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
 				font-family: 'Trebuchet MS', Helvetica, sans-serif;
 				line-height: 18px;
-				font-size: 14px;
+				font-size: 16px;
 				color: #333;
 				">
 				<tr><td colspan="3"><h2>Nos commissions projet</h2></td><tr>
 				<tr>
-					<td valign="top" v-for="commission in commissions.slice(0,3)" v-if="commission.hasOwnProperty('Illustration')">
-						<img :src="commission.Illustration[0].thumbnails.large.url" width=180 />
+					<td valign="top" v-for="commission in commissions" v-if="commission.hasOwnProperty('Illustration')">
+						<a :href="commission.Lien">
+							<img :src="commission.Illustration[0].thumbnails.large.url" width=180 />
+						</a>
 					</td>
 				</tr>
 				<tr>
-					<td valign="top" v-for="commission in commissions.slice(0,3)" style="text-align: center; text-transform: uppercase;">
-						<strong><span v-html="commission.Titre"></span></strong><br/>
-						<a v-if="commission.Statut != 'terminée'" :href="commission.Lien">
-							<span v-html="commission.Statut" style="font-size: 10px; color: rgb(51, 51, 51);"></span>
-						</a>
-						<a v-else>
-							<span v-html="commission.Statut" style="font-size: 10px; color: rgb(51, 51, 51);"></span>
+					<td valign="top" v-for="commission in commissions" style="text-align: center; text-transform: uppercase;">
+						<a :href="commission.Lien">
+							<strong><span v-html="commission.Titre" style="font-size: 14px;"></strong><br/>
+							<span v-html="commission.Statut" style="font-size: 10px;"></span>
 						</a>
 					</td>
 				</tr>

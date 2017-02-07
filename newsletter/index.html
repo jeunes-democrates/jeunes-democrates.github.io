@@ -16,17 +16,19 @@
 		a img {border:none;}
 		.image_fix {display:block;}
 		p {margin: 1em 0;}
-		h1, h2, h3, h4, h5, h6 {color: black !important;}
-		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
-		h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
-			color: red !important;
-		 }
+		h1, h2, h3, h4, h5, h6 {color: rgb(51,51,51) !important;}
+		h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active,
 		h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
-			color: purple !important;
+			color: rgb(51,51,51) !important;
 		}
 		table td {border-collapse: collapse;}
 		table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
-		a {color: orange;}
+		a:link, a:visited { text-decoration: none; }
+		a { color: rgb(51,51,51); }
+		a:hover { color: #FF6000; }
+		a:not([href]):hover { color: rgb(51,51,51); }
+		a img { transition: .5s all; }
+		a[href] img:hover { transform: rotate(1deg) translateY(-8px); }
 		@media only screen and (max-device-width: 480px) {
 			a[href^="tel"], a[href^="sms"] {
 						text-decoration: none;
