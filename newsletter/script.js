@@ -41,7 +41,9 @@ function vueSetup() {
 	})
 
 	Vue.http.get(_airTable.ListEndpoint('Commissions')).then((response) => {
-		var commissions = _airTable.Clean(response.body.records).slice(2,5) // get first 3 actus
+		console.log(response)
+		var commissions = _airTable.Clean(response.body.records)
+		commissions.sort(function(a, b) { return a.Ordre > b.Ordre })
 		store.commit('updateNewsletter', {'commissions': commissions})
 	})
 
@@ -82,132 +84,140 @@ Vue.component('newsletter-illustration', {
 Vue.component('newsletter-edito', {
 	props: ['edito'],
 	template: `
-		<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
-			font-family: 'Trebuchet MS', Helvetica, sans-serif;
-			line-height: 24px;
-			color: #333;
-		">
-			<tr class="edito" v-if="edito">
-				<td valign="top">
-					<div v-html="edito.Texte"></div>
-				</td>
-			</tr>
-
-		</table>
+		<div style="background-color: #fafafa; padding: 14px; padding-top: 0px;">
+			<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+				font-family: 'Trebuchet MS', Helvetica, sans-serif;
+				line-height: 24px;
+				color: #333;
+				">
+				<tr class="edito" v-if="edito">
+					<td valign="top">
+						<div v-html="edito.Texte"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
 	`
 })
 
 Vue.component('newsletter-meta', {
 	props: ['date'],
 	template: `
-		<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
-			font-family: 'Trebuchet MS', Helvetica, sans-serif;
-			line-height: 24px;
-			color: #333;
-		">
-
-			<tr class="newsletter__logo">
-				<td valign="top" width="287px" style="text-align: right; color: #999;">
-					<p>{{ date }}</p>
-				</td>
-				<td valign="top" width="287px">
-					<table style="
-						text-align: center;
-						font-family: 'Century Gothic', Futura, Verdana, sans-serif;
-						line-height: 1;
-						font-size: 42px;
-						display: inline-block;
-						margin-top: 14px;
-						">
-						<tr>
-							<td style="
-							background-color:#ff6000;
-							color:white;
-							text-align:right;
-							vertical-align:bottom;
-							padding-top:8px;
-							padding-right:2px;
-							padding-left:1px;
+		<div style="background-color: #f3f3f3; padding: 14px;">
+			<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
+				font-family: 'Trebuchet MS', Helvetica, sans-serif;
+				line-height: 24px;
+				color: #333;
+				">
+	
+				<tr class="newsletter__logo">
+					<td width="120"></td>
+					<td valign="top">
+						<table style="
+							text-align: center;
+							font-family: 'Century Gothic', Futura, Verdana, sans-serif;
+							line-height: 1;
+							font-size: 42px;
+							display: inline-block;
+							margin-top: 14px;
+							width: 100%;
 							">
-								J<br>DEM
-							</td>
-							<td style="
-								color:#ff6000;
-								text-align:left;
-								vertical-align:bottom;
-								padding-top:8px;
-								padding-left:1px;
-								width:77px;
-								">
-								EUNES<br>OCRATES
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+							<tr>
+								<td style="
+									background-color:#ff6000;
+									color:white;
+									text-align:right;
+									vertical-align:bottom;
+									padding-top:8px;
+									padding-right:2px;
+									padding-left:1px;
+									">
+									J<br>DEM
+								</td>
+								<td style="
+									color:#ff6000;
+									text-align:left;
+									vertical-align:bottom;
+									padding-top:8px;
+									padding-left:1px;
+									width:77px;
+									">
+									EUNES<br>OCRATES
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
 
-	`
-})
+				<tr>
+					<td colspan=2 valign="top" style="text-align: right; color: #999;">
+						<p style="text-align: center;">{{ date }}</p>
+					</td>
+				</tr>
 
-Vue.component('newsletter-actu', {
-	props: ['actu'],
-	template: `
-		<td class="actu" valign="top">
-			<div v-html="actu.Titre"></div>
-			<img :src="actu.Illustration[0].thumbnails.large.url" width=180 />
-		</td>
+			</table>
+		</div>
 	`
 })
 
 Vue.component('newsletter-actus', {
 	props: ['actus'],
 	template: `
-		<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
-			font-family: 'Trebuchet MS', Helvetica, sans-serif;
-			line-height: 18px;
-			font-size: 14px;
-			color: #333;
-		">
-			<tr><td colspan="3"><h2>Nos publications récentes</h2></td><tr>
-			<tr class="actus" v-if="actus">
-				<newsletter-actu :actu="actus[0]"></newsletter-actu>
-				<newsletter-actu :actu="actus[1]"></newsletter-actu>
-				<newsletter-actu :actu="actus[2]"></newsletter-actu>
-			</tr>
-
-		</table>
+		<div v-if="actus" style="background-color: #f3f3f3; padding: 14px;">
+			<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
+				font-family: 'Trebuchet MS', Helvetica, sans-serif;
+				line-height: 18px;
+				font-size: 14px;
+				color: #333;
+				">
+				<tr><td colspan="3"><h2>Nos publications récentes</h2></td><tr>
+				<tr class="actus">
+					<td valign="top" v-for="actu in actus">
+						<img :src="actu.Illustration[0].thumbnails.large.url" width=180 />
+					</td>
+				</tr>
+				<tr class="actus">
+					<td valign="top" v-for="actu in actus">
+						<a :href="actu.Lien">
+							<strong v-html="actu.Titre" style="color: rgb(51, 51, 51);"></strong>
+						</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 	`
 })
 
-
-Vue.component('newsletter-commission', {
-	props: ['commission'],
-	template: `
-		<td class="commission" valign="top">
-			<div v-html="commission.Titre"></div>
-			<img :src="commission.Illustration[0].thumbnails.large.url" width=180 />
-		</td>
-	`
-})
 
 Vue.component('newsletter-commissions', {
 	props: ['commissions'],
 	template: `
-		<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
-			font-family: 'Trebuchet MS', Helvetica, sans-serif;
-			line-height: 18px;
-			font-size: 14px;
-			color: #333;
-		">
-			<tr><td colspan="3"><h2>Commissions projet</h2></td><tr>
-			<tr class="commissions" v-if="commissions">
-				<newsletter-commission :commission="commissions[0]"></newsletter-commission>
-				<newsletter-commission :commission="commissions[1]"></newsletter-commission>
-				<newsletter-commission :commission="commissions[2]"></newsletter-commission>
-			</tr>
-
-		</table>
+		<div v-if="commissions" style="background-color: #fafafa; padding: 14px;">
+			<table cellpadding="7" cellspacing="0" border="0" align="center" width="568" style="
+				font-family: 'Trebuchet MS', Helvetica, sans-serif;
+				line-height: 18px;
+				font-size: 14px;
+				color: #333;
+				">
+				<tr><td colspan="3"><h2>Nos commissions projet</h2></td><tr>
+				<tr>
+					<td valign="top" v-for="commission in commissions.slice(0,3)" v-if="commission.hasOwnProperty('Illustration')">
+						<img :src="commission.Illustration[0].thumbnails.large.url" width=180 />
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" v-for="commission in commissions.slice(0,3)" style="text-align: center; text-transform: uppercase;">
+						<strong><span v-html="commission.Titre"></span></strong><br/>
+						<a v-if="commission.Statut != 'terminée'" :href="commission.Lien">
+							<span v-html="commission.Statut" style="font-size: 10px; color: rgb(51, 51, 51);"></span>
+						</a>
+						<a v-else>
+							<span v-html="commission.Statut" style="font-size: 10px; color: rgb(51, 51, 51);"></span>
+						</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 	`
 })
 
@@ -235,17 +245,17 @@ Vue.component('newsletter-commissions', {
 					:edito="newsletter.edito"
 					></newsletter-edito>
 
-				<hr/>
-
 				<newsletter-actus
 					:actus="newsletter.actus"
 					></newsletter-actus>
 
-				<hr/>
-
 				<newsletter-commissions
 					:commissions="newsletter.commissions"
 					></newsletter-commissions>
+
+				<newsletter-meta
+					:date="newsletter.meta.Date"
+					></newsletter-meta>
 
 				</td>
 			</tr>
@@ -264,6 +274,3 @@ Vue.component('newsletter-commissions', {
 }
 
 
-//				<newsletter-meta
-//					:date="newsletter.meta.Date"
-//					></newsletter-meta>
