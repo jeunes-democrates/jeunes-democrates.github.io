@@ -114,6 +114,7 @@ var $quoteWriter = $('#quoteWriter')
 $quoteWriter.keyup(function(){
 	$quote.text($quoteWriter.val())
 	generateShareUrl()
+	refreshCanvas()
 })
 
 var $hashTagWriter = $('#hashTagWriter')
@@ -121,6 +122,7 @@ var $hashTagWriter = $('#hashTagWriter')
 $hashTagWriter.keyup(function(){
 	$hashTag.text($hashTagWriter.val())
 	generateShareUrl()
+	refreshCanvas()
 })
 
 ///////////////
@@ -134,6 +136,8 @@ function refreshCanvas() {
 		});
 	});
 }
+
+refreshCanvas()
 
 function readDataFromURL(url) {
 	var argumentStrings = url.split('?$')[1].split('&$')
