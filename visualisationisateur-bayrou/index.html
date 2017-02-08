@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Générateur de visuels ! !">
+	<meta name="author" content="">
+
+	<meta property="og:title" content="VISUALISATIONISATIONNNNNN">
+	<meta property="og:site_name" content="Les Jeunes Démocrates">
+	<meta property="og:description" content="Générateur de visuels !">
+	<meta property="og:image" content="https://images.unsplash.com/photo-1418154462585-8ca028f43c48">
+
+	<title>Bayrou 2017 !</title>
+
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Pacifico&amp;subset=latin-ext" rel="stylesheet">
+
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" type="text/css">
+
+</head>
+
+<body>
+
+	<div id="mainContainer" class="container" >
+
+		<h1>Générateur de visuels</h1>
+	
+		<hr>
+	
+		<form>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Citation</div>
+					<input id="quoteWriter" class="form-control" placeholder="Y a-t-il une loi pour les puissants, ou une justice pour tous ?"></input>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">Mot-clé</div>
+					<input id="hashTagWriter" class="form-control" placeholder="Un unique mot clé, par exemple 'Justice'."></input>
+				</div>
+			</div>
+		</form>
+
+		<hr>
+		
+		<div id="shareableVisual">
+		
+			<div id="background"></div>
+		
+			<div id="hashTagBar">
+				<span id="hashTag">Justice</span>
+			</div>
+
+			<div id="quoteBar">
+				<span id="quote">Y a-t-il une loi pour les puissants, ou une justice pour tous ?</span>
+			</div>
+		
+		</div>
+	
+		<a id="download" class="btn btn-primary btn-block btn-lg">
+			Télécharger
+		</a>
+
+
+		<div class="input-group" style="margin: .5rem 0 3rem;">
+			<div class="input-group-addon">URL de partage</div>
+			<input id="shareUrl" type="text" class="form-control"
+				placeholder="http://..." readonly
+				onClick="this.setSelectionRange(0, this.value.length)"/>
+		</div>
+
+		<p style="text-align: center;">Attention, l'URL de partage sert à partager un visuel en cours de création, pas au partage sur les réseaux sociaux !</p>
+
+		<div id="alert"></div>
+
+	</div>
+
+</body>
+
+<style>
+#mainContainer { width: 1230px; max-width: 1230px; }
+h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
+#shareableVisual { position: relative; display: inline-block; overflow: hidden; }
+#background { width: 1200px; height: 630px; background-size: cover; background-position: center center; background-image: url('fond.png'); }
+#logo { position: absolute; right: 6em; bottom: 3em; height: 6em; }
+#quoteBar { position: absolute; right: 4rem; bottom: 9em; height: 24em; width: 60%; }
+#quote { display: block; width: 100%; text-align: right; position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3.4em; line-height: 1.1; font-family: 'Century Gothic', 'Futura', sans-serif; }
+#hashTagBar { position: absolute; bottom: 3rem; right: 3.5rem;  }
+#hashTag {
+	display: inline-block; padding: 0 .5em 0 6rem;
+	font-family: 'Pacifico'; font-size: 4.4em; color: white;
+}
+#hashTag::before { content: '#'; color: #F8EA19; position: absolute; top: 0em; left: 3rem; }
+
+</style>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+<script>
+
+var $quoteWriter = $('#quoteWriter')
+	$quote = $('#quote')
+$quoteWriter.keyup(function(){
+	$quote.text($quoteWriter.val())
+	generateShareUrl()
+	refreshCanvas()
+})
+
+var $hashTagWriter = $('#hashTagWriter')
+	$hashTag = $('#hashTag')
+$hashTagWriter.keyup(function(){
+	$hashTag.text($hashTagWriter.val())
+	generateShareUrl()
+	refreshCanvas()
+})
+
+///////////////
+
+function refreshCanvas() {
+	html2canvas($('#shareableVisual')).then(function(canvas) {
+		var image = canvas.toDataURL("image/jpeg");
+		$('#download').attr({
+			'download': 'visuel-bayrou.jpeg',
+			'href'    : image
+		});
+	});
+}
+
+refreshCanvas()
+
+function readDataFromURL(url) {
+	var argumentStrings = url.split('?$')[1].split('&$')
+		argumentsFromUrl = readArguments(argumentStrings)
+	$.each(argumentsFromUrl, function(argumentType, argumentValue){
+		$('#'+argumentType+'Writer').val(argumentValue)
+		$('#'+argumentType).text(argumentValue)
+	})
+	generateShareUrl()
+}
+
+function readArguments(argumentStrings) {
+	var argumentTypes = ['quote', 'hashTag']
+		result = {}
+	$.each(argumentStrings, function(i, argumentString){
+		// For each argument passed through the URL, add it to the result object
+		$.each(argumentTypes, function(j, argumentType){
+			var split = argumentString.split(argumentType + '=')
+			if (split[1]) result[argumentType] = decodeURI(split[1])
+		})
+	})
+	return result
+}
+
+function generateShareUrl() {
+	var url =
+		window.location.origin + window.location.pathname +
+		'?$quote=' + $('#quoteWriter').val() +
+		'&$hashTag=' + $('#hashTagWriter').val()
+	$('#shareUrl').val(encodeURI(url))
+}
+
+readDataFromURL(window.location.href)
+
+</script>
+
+<footer style="margin-top: 3em; text-align: center;" >
+<p style="font-size: .8em; color: #999">Fabriqué avec ❤ par Antonin<br/>En cas de problème, passez moi un <a href="https://www.messenger.com/t/antonin.grele">message</a> !</p>
+</footer>
+
+</body>
+
+</html>
