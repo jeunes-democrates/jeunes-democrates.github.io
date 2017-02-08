@@ -14,11 +14,11 @@
 	<meta property="og:description" content="Générateur de visuels !">
 	<meta property="og:image" content="https://images.unsplash.com/photo-1418154462585-8ca028f43c48">
 
-	<title>VISUALISATIONISATIONNNNNN !</title>
+	<title>Bayrou 2017 !</title>
 
 	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Pacifico&amp;subset=latin-ext" rel="stylesheet">
 
 	<!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" type="text/css">
@@ -37,49 +37,37 @@
 			<div class="form-group">
 				<div class="input-group">
 					<div class="input-group-addon">Citation</div>
-					<input id="quoteWriter" class="form-control" placeholder="Pour une interdiction totale du Glyphosate !"></input>
+					<input id="quoteWriter" class="form-control" placeholder="Y a-t-il une loi pour les puissants, ou une justice pour tous ?"></input>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
 					<div class="input-group-addon">Mot-clé</div>
-					<input id="hashTagWriter" class="form-control" placeholder="Un unique mot clé, par exemple 'Environnement'."></input>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<div class="input-group-addon">Image</div>
-					<input id="backgroundWriter" class="form-control" placeholder="Adresse de l'image, par exemple sur http://imgur.com"></input>
+					<input id="hashTagWriter" class="form-control" placeholder="Un unique mot clé, par exemple 'Justice'."></input>
 				</div>
 			</div>
 		</form>
 
-<!--		<button class="btn btn-secondary btn-block" onClick="refreshCanvas()">↻ Recharger</button>
-	-->
 		<hr>
 		
 		<div id="shareableVisual">
 		
-			<div id="background" style="background-image: url('https://images.unsplash.com/photo-1418154462585-8ca028f43c48')"></div>
+			<div id="background"></div>
 		
-			<div id="cover"></div>
-
-			<img id="logo" src="logo.png">
-
 			<div id="hashTagBar">
-				<span id="hashTag">Glyphosate</span>
+				<span id="hashTag">Justice</span>
 			</div>
 
 			<div id="quoteBar">
-				<span id="quote">Pour une interdiction totale du Glyphosate !</span>
+				<span id="quote">Y a-t-il une loi pour les puissants, ou une justice pour tous ?</span>
 			</div>
 		
 		</div>
 	
-<!--	<a id="download" class="btn btn-primary btn-block btn-lg">
-			Télécharger la coolitude
+		<a id="download" class="btn btn-primary btn-block btn-lg">
+			Télécharger
 		</a>
--->	
+
 
 		<div class="input-group" style="margin: .5rem 0 3rem;">
 			<div class="input-group-addon">URL de partage</div>
@@ -100,17 +88,16 @@
 #mainContainer { width: 1230px; max-width: 1230px; }
 h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
 #shareableVisual { position: relative; display: inline-block; overflow: hidden; }
-#background { width: 1200px; height: 630px; background-size: cover; background-position: center center; }
-#cover { position: absolute; top: 0; left: 0; width: 1200px; height: 630px; background-color: rgba(0,0,0,0.4) }
+#background { width: 1200px; height: 630px; background-size: cover; background-position: center center; background-image: url('fond.png'); }
 #logo { position: absolute; right: 6em; bottom: 3em; height: 6em; }
-#quoteBar { position: absolute; top: 12em; height: 16em; width: 100%; }
-#quote { display: block; padding: 0 6rem; position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 4em; line-height: 1.1; font-family: 'Century Gothic', 'Futura', sans-serif; text-shadow: .05em .05em .15em rgba(0,0,0,0.5); }
-#hashTagBar { background-color: rgba(255,96,0, 0.9); position: absolute; left: 0; top: 3em;  }
+#quoteBar { position: absolute; right: 4rem; bottom: 9em; height: 24em; width: 60%; }
+#quote { display: block; width: 100%; text-align: right; position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3.4em; line-height: 1.1; font-family: 'Century Gothic', 'Futura', sans-serif; }
+#hashTagBar { position: absolute; bottom: 3rem; right: 3.5rem;  }
 #hashTag {
 	display: inline-block; padding: 0 .5em 0 6rem;
-	font-family: 'Architects Daughter'; font-size: 4em; color: white;
+	font-family: 'Pacifico'; font-size: 4.4em; color: white;
 }
-#hashTag::before { content: '#'; position: absolute; top: .15em; left: 3rem; }
+#hashTag::before { content: '#'; color: #F8EA19; position: absolute; top: 0em; left: 3rem; }
 
 </style>
 
@@ -136,20 +123,13 @@ $hashTagWriter.keyup(function(){
 	generateShareUrl()
 })
 
-var $backgroundWriter = $('#backgroundWriter')
-	$background = $('#background')
-$backgroundWriter.keyup(function(){
-	$background.css('background-image', "url('" + $backgroundWriter.val() + "')" )
-	generateShareUrl()
-})
-
 ///////////////
 
 function refreshCanvas() {
 	html2canvas($('#shareableVisual')).then(function(canvas) {
 		var image = canvas.toDataURL("image/jpeg");
 		$('#download').attr({
-			'download': 'photoDeProfil-LND+IC.jpeg',
+			'download': 'visuel-bayrou.jpeg',
 			'href'    : image
 		});
 	});
@@ -159,19 +139,14 @@ function readDataFromURL(url) {
 	var argumentStrings = url.split('?$')[1].split('&$')
 		argumentsFromUrl = readArguments(argumentStrings)
 	$.each(argumentsFromUrl, function(argumentType, argumentValue){
-		if (argumentType === "background") {
-			$backgroundWriter.val(argumentValue)
-			$background.css('background-image', "url('" + argumentValue + "')" )
-		} else {
-			$('#'+argumentType+'Writer').val(argumentValue)
-			$('#'+argumentType).text(argumentValue)
-		}
+		$('#'+argumentType+'Writer').val(argumentValue)
+		$('#'+argumentType).text(argumentValue)
 	})
 	generateShareUrl()
 }
 
 function readArguments(argumentStrings) {
-	var argumentTypes = ['quote', 'hashTag', 'background']
+	var argumentTypes = ['quote', 'hashTag']
 		result = {}
 	$.each(argumentStrings, function(i, argumentString){
 		// For each argument passed through the URL, add it to the result object
@@ -187,9 +162,7 @@ function generateShareUrl() {
 	var url =
 		window.location.origin + window.location.pathname +
 		'?$quote=' + $('#quoteWriter').val() +
-		'&$hashTag=' + $('#hashTagWriter').val() +
-		'&$background=' + $('#backgroundWriter').val()
-	console.log(url)
+		'&$hashTag=' + $('#hashTagWriter').val()
 	$('#shareUrl').val(encodeURI(url))
 }
 
