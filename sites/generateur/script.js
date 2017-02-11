@@ -41,7 +41,7 @@ function vueSetup() {
 
 	store.commit('updateData', {'meta': readDataFromURL(window.location.href)})
 
-	var _faceBook = new faceBook(target=store.state.meta.facebook, appSecret=FACEBOOK_TOKEN, appSecret=FACEBOOK_SECRET)
+	var _faceBook = new faceBook(target=store.state.meta.facebook, appSecret='1756208987947530', appSecret='5b4faa1c5187f415b4e2980dd446431c')
 
 	Vue.http.get(_faceBook.Feed()).then((response) => {
 		store.commit('updateData', {'facebookFeed': response.body.data})
