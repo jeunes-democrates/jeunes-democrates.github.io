@@ -15,7 +15,6 @@ function vueSetup() {
 					state.newsletter[param] = payload[param]
 				}
 			}
-
 		}
 	})
 

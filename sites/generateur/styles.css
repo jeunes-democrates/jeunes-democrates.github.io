@@ -1,0 +1,13 @@
+h1 {
+	text-align: center;
+	color: white;
+	font-size: 4rem;
+	text-shadow: 1px 1px 4px #000;
+}
+
+.first-slide {
+	padding: 2rem;
+	background-image: url('orange-canvas.png');
+	background-size: cover;
+	min-height: 100vh;
+}

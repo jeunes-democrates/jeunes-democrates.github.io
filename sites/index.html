@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Sites de fédérations</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" type="text/css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<div class="container">
+
+	<br/>
+
+	<h1>Générateur de sites de fédérations JDem !</h1>
+	
+	<p>Renseignez le formulaire suivant pour pré-générer votre site de fédération :</p>
+
+	<form onSubmit="return goToSite()">
+	
+	<div class="form-group">
+		<label for="nom">Nom de la fédération *</label>
+		<input class="form-control" id="nom" name="nom" required/>
+		<small class="form-text text-muted">Par exemple "Jeunes Démocrates des Yvelines"</small>
+	</div>
+	
+	<div class="form-group">
+		<label for="numero">Numéro de la fédération *</label>
+		<input class="form-control" id="numero" name="numero" required/>
+		<small class="form-text text-muted">Par exemple "78"</small>
+	</div>
+	
+	<div class="form-group">
+		<label for="facebook">Page facebook *</label>
+		<input class="form-control inline" id="facebook" name="facebook" required/>
+		<small class="form-text text-muted">Par exemple "JDem78"</small>
+	</div>
+	
+	<button class="btn btn-primary" type="submit">Pré-visualiser le site !</button>
+
+	<form>
+
+</div>
+
+<script>
+
+document.querySelector('form').addEventListener('submit', event => {
+	event.preventDefault();
+});
+
+function goToSite() {
+	var url =
+		window.location.origin + window.location.pathname + 'generateur/' +
+		'?$nom=' + $('#nom').val() +
+		'&$numero=' + $('#numero').val() +
+		'&$facebook=' + $('#facebook').val()
+	console.log(url)
+	location.href = url
+	return false
+}
+
+</script>
+
+</html>
