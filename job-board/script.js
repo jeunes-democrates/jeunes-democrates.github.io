@@ -7,7 +7,6 @@ function vueSetup() {
 		mutations: {
 			updateJobs(state, payload) {
 				state.jobs = payload
-				console.log(payload)
 			}
 		}
 	})
