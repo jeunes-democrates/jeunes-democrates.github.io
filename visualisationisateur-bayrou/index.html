@@ -109,20 +109,34 @@ h1 { text-transform: uppercase; font-weight: bold; margin-top: 1em; }
 
 <script>
 
+var delay = (function(){
+	var timer = 0;
+	return function(callback, ms){
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	};
+})();
+
 var $quoteWriter = $('#quoteWriter')
 	$quote = $('#quote')
+
 $quoteWriter.keyup(function(){
-	$quote.text($quoteWriter.val())
-	generateShareUrl()
-	refreshCanvas()
+	delay(function(){
+		$quote.text($quoteWriter.val())
+		generateShareUrl()
+		refreshCanvas()
+	}, 500)
 })
 
 var $hashTagWriter = $('#hashTagWriter')
 	$hashTag = $('#hashTag')
+
 $hashTagWriter.keyup(function(){
-	$hashTag.text($hashTagWriter.val())
-	generateShareUrl()
-	refreshCanvas()
+	delay(function(){
+		$hashTag.text($hashTagWriter.val())
+		generateShareUrl()
+		refreshCanvas()
+	}, 500)
 })
 
 ///////////////
