@@ -48,6 +48,24 @@ function vueSetup() {
 	})
 
 
+	Vue.component('main-nav', {
+		props: ['brand'],
+		template: `
+			<nav class="navbar navbar-light">
+				<div class="container">
+					<a class="navbar-brand" href="#">
+						<img src="logo.png" class="navbar__logo">
+						<span v-html="brand"></span>
+					</a>
+				</div>
+			</nav>
+		`
+	})
+
+
+
+
+
 
 	// App
 	var app = new Vue({
@@ -57,11 +75,15 @@ function vueSetup() {
 
 			<div lang="fr">
 
+				<div class="top-background"></div>
+
+				<main-nav :brand="state.meta.nom"></main-nav>
+
 				<div class="first-slide">
 				
 					<h1>{{ state.meta.nom }}</h1>
 
-					<div v-for="item in state.facebookFeed">{{ item.story }}</div>
+					<div hidden v-for="item in state.facebookFeed">{{ item.story }}</div>
 
 				</div>
 
