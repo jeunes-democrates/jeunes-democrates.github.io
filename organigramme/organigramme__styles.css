@@ -42,6 +42,7 @@
 	flex-direction: column;
 	justify-content: center;
 	width: 8em;
+    padding-left: 1rem;
 }
 .organigramme__bouton.organigramme__pole__email:active { transform: translateY(0px); background-color: #b34300; }
 
@@ -82,7 +83,7 @@
 	display: inline-block; border-radius: 4px; padding: .3em .6em;
 	background-color: #ff6000; color: white; opacity: .7;
 	text-decoration: none;
-	font-size: .55em;
+	font-size: .65em;
 	transition: all .25s;
 }
 

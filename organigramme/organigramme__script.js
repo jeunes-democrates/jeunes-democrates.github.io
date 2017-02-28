@@ -1,24 +1,24 @@
 function organigrammeSetup() {
 	// Store
-	const store = new Vuex.Store({
+	window.store = new Vuex.Store({
 		state: {
 			poles: [],
+			members: []
 		},
 		mutations: {
 			updatePoles(state, payload) {
-				let poles = payload['poles']
-				let members = payload['members']
+				var poles = payload['poles']
+				var members = state.members = payload['members']
 				state.poles = []
 				for (i in poles) {
-					let pole = poles[i].fields
+					var pole = poles[i]
 					for (i in pole.Membres) {
-	
+						var member = pole.Membres[i]
 						// in each pole, replace the member ID by full member data
-						pole.Membres[i] = members.filter(obj => obj.id == pole.Membres[i] )[0].fields
-	
+						member = members.filter(obj => obj.airTableId == member)[0]
 						// use the first photo of the attachment array, and get its standardized largest thumbnail
-						pole.Membres[i].Photo = pole.Membres[i].Photo[0].thumbnails.large.url
-	
+						if (member.hasOwnProperty('Photo')) member.Photo = member.Photo[0].thumbnails.large.url
+						pole.Membres[i] = member
 					}
 					// Ordonne les membres
 					pole.Membres.sort(function(a, b) { return a.Ordre > b.Ordre })
@@ -30,8 +30,18 @@ function organigrammeSetup() {
 		}
 	})
 	
+	var _airTable = new airTable(apiKey='keyQ9LAVuNmhIIhjN', appKey='appHznRjE909j9VlP')
+
+	Vue.http.get(_airTable.ListEndpoint('Pôles')).then((response) => {
+		var poles = _airTable.Clean(response.body.records)
+		Vue.http.get(_airTable.ListEndpoint('Membres')).then((response) => {
+			var members = _airTable.Clean(response.body.records)
+			store.commit('updatePoles', {'poles': poles, 'members': members})
+		})
+	})
+	
 	// Components
-	const Organogram = {
+	var Organogram = {
 		template: `
 			<div class="organigramme__poles">
 	
@@ -40,7 +50,7 @@ function organigrammeSetup() {
 	
 					<div class="organigramme__pole__header">
 						<div class="organigramme__pole__name">{{ pole.Name }}</div>
-						<a class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter ></a>
+						<a v-if="pole.Email" class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter ></a>
 					</div>
 					
 					<div class="organigramme__membres">
@@ -74,18 +84,8 @@ function organigrammeSetup() {
 		}
 	}
 	
-	
-	Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Pôles?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
-		let poles = response.body.records
-		Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Membres?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
-			let members = response.body.records
-			store.commit('updatePoles', {'poles': poles, 'members': members})
-		})
-	})
-	
-	
 	// App
-	const app = new Vue({
+	var app = new Vue({
 		el: '#app',
 		store,
 		components: { Organogram },
