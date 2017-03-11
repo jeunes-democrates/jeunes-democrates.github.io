@@ -7,30 +7,19 @@ function vueSetup() {
 				'name' : "Les Jeunes Démocrates"
 			},
 			'menu' : [
-				{ "name" : "Notre association", "children" : [
-						{ "name" : "Présentation", "url" : "#" },
-						{ "name" : "Notre équipe", "url" : "#" },
-						{ "name" : "Nos instances", "children" : [
-								{ "name" : "Le Bureau National", "url" : "#" },
-								{ "name" : "Le Conseil National", "url" : "#" },
-								{ "name" : "La Commission d'Arbitrage", "url" : "#" }
-							]
-						},
-						{ "name" : "Nos textes", "children" : [
-								{ "name" : "Nos statuts", "url" : "#" },
-								{ "name" : "Notre règlement intérieur", "url" : "#" },
-								{ "name" : "Notre charte éthique", "url" : "#" }
-							]
-						}
+				{ "name" : "L'association", "children" : [
+						{ "name" : "Pourquoi des Jeunes Démocrates ?", "url" : "#" },
+						{ "name" : "Qui se cache derrière ?", "url" : "#" }
 					]
 				},
-				{ "name" : "Nos idées", "url" : "#" },
-				{ "name" : "Nous contacter", "children" : [
-						{ "name" : "Contacts nationaux", "url" : "#" },
-						{ "name" : "Contacts locaux", "url" : "#" }
+				{ "name" : "Les idées", "url" : "#" },
+				{ "name" : "Contacts", "children" : [
+						{ "name" : "Nationaux", "url" : "#" },
+						{ "name" : "Régionaux", "url" : "#" }
 					]
 				},
-			]
+			],
+			'articles': [],
 		},
 		mutations: {
 			updateData(state, payload) {
@@ -42,38 +31,66 @@ function vueSetup() {
 	})
 
 
+
+	// DATA FETCHING
+
+	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
+
+	Vue.http.get(_airTable.ListEndpoint('Actus')).then((response) => {
+		var actus = _airTable.Clean(response.body.records) // get first 3 actus
+		actus = actus.filter(function( actu ) {
+			return !actu.hasOwnProperty('Exclure');
+		})
+		actus = actus.slice(0,3)
+		store.commit('updateData', {'articles': actus})
+	})
+
+
+	// COMPONENTS
+
+	Vue.component('article-wall', {
+		props: ['articles'],
+		template: `
+			<div class="articleWall">
+				<h2>Publications récentes</h2>
+				<div class="articleWall__scroller">
+					<a class="articleWall__anchor" v-for="article in articles" :href="article.Lien">
+						<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
+						<span class="articleWall__title" v-html="article.Titre"></span>
+					</a>
+				</div>
+			</div>
+		`
+	})
+
 	Vue.component('main-nav', {
 		props: ['brand', 'menu'],
 		template: `
 			<nav>
-				<ul class="nav">
-					<span v-for="menuItem in menu">
-						<li v-if="menuItem.hasOwnProperty('url')" class="nav-item">
-							<a
-								v-html="menuItem.name"
-								:href="menuItem.url"
-								class="nav-link"
-								>
-							</a>
-						</li>
-						<li v-else-if="menuItem.hasOwnProperty('children')" class="nav-item dropdown" >
-							<a
-								v-html="menuItem.name"
-								href="#"
-								class="nav-link dropdown-toggle"
-								data-toggle="dropdown"
-								role="button" aria-haspopup="true" aria-expanded="false"
-								>
-							</a>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
-							</div>
-						</li>
-					</span>
+				<ul class="nav nav-inverse">
+					<li v-for="menuItem in menu" :class="[menuItem.hasOwnProperty('children') ? 'nav-item dropdown' : 'nav-item']">
+						<a
+							v-if="menuItem.hasOwnProperty('children')"
+							v-html="menuItem.name"
+							href="#"
+							class="nav-link dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+							>
+						</a>
+						<a
+							v-else
+							v-html="menuItem.name"
+							:href="menuItem.url"
+							class="nav-link"
+							>
+						</a>
+						<div v-if="menuItem.hasOwnProperty('children')" class="dropdown-menu">
+							<a v-for="link in menuItem.children" class="dropdown-item" :href="link.url" v-html="link.name"></a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a href="#"	class="nav-link super-nav-link">Rejoins-nous !</a>
+					</li>
 				</ul>
 			</nav>
 		`
@@ -101,44 +118,13 @@ function vueSetup() {
 
 				</div>
 
-				<main-nav :brand="state.meta.name" :menu="state.menu" class="container"></main-nav>
+				<div class="nav-wrapper">
+					<main-nav :brand="state.meta.name" :menu="state.menu" class="container"></main-nav>
+				</div>
 
-				
-
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
-				<p>Lorem Ipsum</p>
+				<section>
+					<article-wall :articles="state.articles" class="container"></article-wall>
+				</section>
 
 			</div>
 	
