@@ -52,6 +52,7 @@ function vueSetup() {
 	})
 
 Vue.component('newsletter-header', {
+	props: ['title'],
 	template : `
 		<table cellpadding="0" cellspacing="0" border="0" align="center" width="582" style="
 			font-family: 'Trebuchet MS', Helvetica, sans-serif;
@@ -60,12 +61,8 @@ Vue.component('newsletter-header', {
 		">
 
 			<tr>
-				<td valign="top" width="263px" style="color: white;">
-					Bonne année 2017 !
-				</td>
-				<td valign="top" width="263px" style="text-align: right; color: #999;">
-					<!-- empty -->
-				</td>
+				<td valign="top" width="263px" style="color: white;" v-html="title"></td>
+				<td valign="top" width="263px" style="text-align: right; color: #999;"><!-- empty --></td>
 			</tr>
 
 		</table>
@@ -107,7 +104,7 @@ Vue.component('newsletter-edito', {
 Vue.component('newsletter-meta', {
 	props: ['date'],
 	template: `
-		<div style="background-color: #f3f3f3; padding: 14px;">
+		<div style="background-color: #fafafa; padding: 14px;">
 			<table cellpadding="14px" cellspacing="0" border="0" align="center" width="582" style="
 				font-family: 'Trebuchet MS', Helvetica, sans-serif;
 				line-height: 24px;
@@ -174,7 +171,7 @@ Vue.component('newsletter-actus', {
 				font-size: 16px;
 				color: #333;
 				">
-				<tr><td colspan="3"><h2>Nos publications récentes</h2></td><tr>
+				<tr><td colspan="3"><h2>Et sinon, à part ça :</h2></td><tr>
 				<tr class="actus">
 					<td valign="top" v-for="actu in actus">
 						<a :href="actu.Lien">
@@ -240,7 +237,9 @@ Vue.component('newsletter-commissions', {
 			<tr>
 				<td>
 
-				<newsletter-header></newsletter-header>
+				<newsletter-header
+					:title="newsletter.meta.Titre"
+					></newsletter-header>
 
 				<newsletter-illustration
 					:illustration="newsletter.meta.Illustration"
@@ -253,10 +252,6 @@ Vue.component('newsletter-commissions', {
 				<newsletter-actus
 					:actus="newsletter.actus"
 					></newsletter-actus>
-
-				<newsletter-commissions
-					:commissions="newsletter.commissions"
-					></newsletter-commissions>
 
 				<newsletter-meta
 					:date="newsletter.meta.Date"
@@ -279,3 +274,6 @@ Vue.component('newsletter-commissions', {
 }
 
 
+//				<newsletter-commissions
+//					:commissions="newsletter.commissions"
+//					></newsletter-commissions>
