@@ -151,8 +151,11 @@ Vue.component('newsletter-meta', {
 				</tr>
 
 				<tr>
-					<td colspan=2 valign="top" style="text-align: right; color: #999;">
-						<p style="text-align: center;">{{ date }}</p>
+					<td colspan=2 valign="top" style="color: #999; text-align: center;">
+						<p>Ce message a est adressé le {{ date }} à *|EMAIL|*<br/>
+							<a href="*|UNSUB|*" style="color: #999 !important;">Désinscription</a>
+							<br/>*|REWARDS|*
+						</p>
 					</td>
 				</tr>
 
