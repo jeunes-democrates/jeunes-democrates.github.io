@@ -8,16 +8,18 @@ function vueSetup() {
 			},
 			'menu' : [
 				{ "name" : "L'association", "children" : [
-						{ "name" : "Pourquoi des Jeunes Démocrates ?", "url" : "#" },
-						{ "name" : "Qui se cache derrière ?", "url" : "#" }
+						{ "name" : "L'historique", "url" : "#" },
+						{ "name" : "L'équipe", "url" : "#" },
+						{ "name" : "Les textes", "url" : "#" }
 					]
 				},
 				{ "name" : "Les idées", "url" : "#" },
-				{ "name" : "Contacts", "children" : [
+				{ "name" : "Les contacts", "children" : [
 						{ "name" : "Nationaux", "url" : "#" },
 						{ "name" : "Régionaux", "url" : "#" }
 					]
 				},
+				{ "name" : "Faire un don", "url" : "#" }
 			],
 			'articles': [],
 		},
@@ -52,7 +54,7 @@ function vueSetup() {
 		props: ['articles'],
 		template: `
 			<div class="articleWall">
-				<h2>Publications récentes</h2>
+				<h2>Idées & actualités</h2>
 				<div class="articleWall__scroller">
 					<a class="articleWall__anchor" v-for="article in articles" :href="article.Lien">
 						<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
@@ -88,8 +90,8 @@ function vueSetup() {
 							<a v-for="link in menuItem.children" class="dropdown-item" :href="link.url" v-html="link.name"></a>
 						</div>
 					</li>
-					<li class="nav-item">
-						<a href="#"	class="nav-link super-nav-link">Rejoins-nous !</a>
+					<li class="nav-item special-event" hidden>
+						<a href="#"	class="nav-link super-nav-link">UR2017!</a>
 					</li>
 				</ul>
 			</nav>
@@ -107,15 +109,22 @@ function vueSetup() {
 			<div id="app" lang="fr">
 
 				<div class="top-background">
-
 					<div class="container">
-
-						<h1>
-							<img class="title__image" src="long-logo-white.svg" :alt="state.meta.name" />
-						</h1>
-
+						<div class="row header-wrapper">
+							<div class="col-md-6 header-item">
+								<h1>
+									<img class="title__image" src="long-logo-white.svg" :alt="state.meta.name" />
+								</h1>
+							</div>
+							<div class="col-md-6 header-item">
+								<h2>Rejoins-nous !</h2>
+								<form class="form-inline">
+									<input type="email" class="form-control form-control-lg email-catcher" placeholder="mon@adresse.mail" />
+									&nbsp;<button type="submit" class="btn btn-lg btn-secondary">→</button>
+								</form>
+							</div>
+						</div>
 					</div>
-
 				</div>
 
 				<div class="nav-wrapper">
