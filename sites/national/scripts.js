@@ -7,12 +7,7 @@ function vueSetup() {
 				'name' : "Les Jeunes Démocrates"
 			},
 			'menu' : [
-				{ "name" : "L'association", "children" : [
-						{ "name" : "L'historique", "url" : "#" },
-						{ "name" : "L'équipe", "url" : "#" },
-						{ "name" : "Les textes", "url" : "#" }
-					]
-				},
+				{ "name" : "Les actus", "url" : "#" },
 				{ "name" : "Les idées", "url" : "#" },
 				{ "name" : "Les contacts", "children" : [
 						{ "name" : "Nationaux", "url" : "#" },
@@ -93,6 +88,8 @@ function vueSetup() {
 					<li class="nav-item special-event" hidden>
 						<a href="#"	class="nav-link super-nav-link">UR2017!</a>
 					</li>
+					<li class="nav-item"><a class="nav-link"><i class="fa fa-twitter"></i></a></li>
+					<li class="nav-item"><a class="nav-link"><i class="fa fa-facebook"></i></a></li>
 				</ul>
 			</nav>
 		`
