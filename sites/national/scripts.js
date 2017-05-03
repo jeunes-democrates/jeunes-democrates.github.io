@@ -16,7 +16,11 @@ function vueSetup() {
 				},
 				{ "name" : "Faire un don", "url" : "#" }
 			],
-			'articles': [],
+			'articles': [
+				{"placeholder" : true },
+				{"placeholder" : true },
+				{"placeholder" : true }
+			],
 		},
 		mutations: {
 			updateData(state, payload) {
@@ -51,10 +55,16 @@ function vueSetup() {
 			<div class="articleWall">
 				<h2>Idées & actualités</h2>
 				<div class="articleWall__scroller">
-					<a class="articleWall__anchor" v-for="article in articles" :href="article.Lien">
-						<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
-						<span class="articleWall__title" v-html="article.Titre"></span>
-					</a>
+					<template v-for="article in articles">
+						<a v-if="!article.placeholder" class="articleWall__anchor" :href="article.Lien">
+							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
+							<span class="articleWall__title" v-html="article.Titre"></span>
+						</a>
+						<a v-else class="articleWall__anchor articleWall__anchor--placeholder">
+							<div class="articleWall__illustration"></div>
+							<span class="articleWall__title">&nbsp;</span>
+						</a>
+					</template>
 				</div>
 			</div>
 		`
