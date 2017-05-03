@@ -14,7 +14,11 @@ function vueSetup() {
 						{ "name" : "Régionaux", "url" : "#" }
 					]
 				},
-				{ "name" : "Faire un don", "url" : "#" }
+				{ "name" : "Faire un don", "url" : "#" },
+				{ "name" : "Adhérer", "url" : "#", "emphasize" : true },
+				{ "name" : "Twitter", "icon" : "twitter", "url" : "#" },
+				{ "name" : "Facebook", "icon" : "facebook", "url" : "#" },
+				{ "name" : "RSS", "icon" : "rss", "url" : "#" }
 			],
 			'articles': [
 				{"placeholder" : true },
@@ -70,41 +74,82 @@ function vueSetup() {
 		`
 	})
 
-	Vue.component('main-nav', {
-		props: ['brand', 'menu'],
+
+	Vue.component('dropdown-children', {
+		props: ['children'],
 		template: `
-			<nav>
-				<ul class="nav nav-inverse">
-					<li v-for="menuItem in menu" :class="[menuItem.hasOwnProperty('children') ? 'nav-item dropdown' : 'nav-item']">
-						<a
-							v-if="menuItem.hasOwnProperty('children')"
-							v-html="menuItem.name"
-							href="#"
-							class="nav-link dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-							>
-						</a>
-						<a
-							v-else
-							v-html="menuItem.name"
-							:href="menuItem.url"
-							class="nav-link"
-							>
-						</a>
-						<div v-if="menuItem.hasOwnProperty('children')" class="dropdown-menu">
-							<a v-for="link in menuItem.children" class="dropdown-item" :href="link.url" v-html="link.name"></a>
-						</div>
-					</li>
-					<li class="nav-item special-event" hidden>
-						<a href="#"	class="nav-link super-nav-link">UR2017!</a>
-					</li>
-					<li class="nav-item"><a class="nav-link"><i class="fa fa-twitter"></i></a></li>
-					<li class="nav-item"><a class="nav-link"><i class="fa fa-facebook"></i></a></li>
-				</ul>
-			</nav>
+			<div class="dropdown-menu">
+				<a v-for="link in children" class="dropdown-item" :href="link.url" v-html="link.name"></a>
+			</div>
 		`
 	})
 
+	Vue.component('nav-icon-link', {
+		props: ['title', 'icon', 'url', 'children', 'emphasize'],
+		template: `
+			<a
+				:title="title"
+				:href="children ? '#' : url"
+				:data-toggle="children ? 'dropdown' : ''"
+				:class="{
+					'nav-link': true,
+					'nav-icon-link': true,
+					'nav-link--emphasize': emphasize,
+					'dropdown-toggle': children
+					}"
+				>
+				<i :class="getIconClass()"></i>
+			</a>
+		`,
+		methods:{
+			getIconClass() { return "fa fa-lg fa-" + this.icon }
+		}
+	})
+
+	Vue.component('nav-text-link', {
+		props: ['text', 'url', 'children', 'emphasize'],
+		template: `
+			<a
+				v-html="text"
+				:href="children ? '#' : url"
+				:data-toggle="children ? 'dropdown' : ''"
+				:class="{
+					'nav-link': true,
+					'nav-text-link': true,
+					'nav-link--emphasize': emphasize,
+					'dropdown-toggle': children
+					}"
+				>
+			</a>
+		`
+	})
+
+	Vue.component('main-nav', {
+		props: ['menu'],
+		template: `
+			<nav>
+				<span v-for="menuItem in menu" :class="[menuItem.hasOwnProperty('children') ? 'dropdown' : '']">
+					<nav-icon-link v-if="menuItem.icon"
+						:title="menuItem.name"
+						:icon="menuItem.icon"
+						:url="menuItem.url"
+						:children="menuItem.children"
+						:emphasize="menuItem.emphasize"
+						></nav-icon-link>
+					<nav-text-link v-else
+						:text="menuItem.name"
+						:url="menuItem.url"
+						:children="menuItem.children"
+						:emphasize="menuItem.emphasize"
+						></nav-text-link>
+					<dropdown-children
+						v-if="menuItem.children"
+						:children="menuItem.children"
+						></dropdown-children>
+				</span>
+			</nav>
+		`
+	})
 
 
 	// App
@@ -139,7 +184,7 @@ function vueSetup() {
 						</div>
 					</div>
 					<div class="nav-wrapper">
-						<main-nav :brand="state.meta.name" :menu="state.menu" class="container"></main-nav>
+						<main-nav :menu="state.menu" class="container"></main-nav>
 					</div>
 				</header>
 
