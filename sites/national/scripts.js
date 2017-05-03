@@ -108,32 +108,53 @@ function vueSetup() {
 
 			<div id="app" lang="fr">
 
-				<div class="top-background">
-					<div class="container">
-						<div class="row header-wrapper">
-							<div class="col-md-6 header-item">
-								<h1>
-									<img class="title__image" src="long-logo-white.svg" :alt="state.meta.name" />
-								</h1>
-							</div>
-							<div class="col-md-6 header-item">
-								<h2>Rejoins-nous !</h2>
-								<form class="form-inline">
-									<input type="email" class="form-control form-control-lg email-catcher" placeholder="mon@adresse.mail" />
-									&nbsp;<button type="submit" class="btn btn-lg btn-secondary">→</button>
-								</form>
+				<header>
+					<div class="top-background">
+						<div class="container">
+							<div class="row header-wrapper">
+								<div class="col-md-6 header-item">
+									<h1>
+										<img class="title__image" src="long-logo-white.svg" :alt="state.meta.name" />
+									</h1>
+								</div>
+								<div class="col-md-6 header-item">
+									<h2>Rejoins-nous !</h2>
+									<form class="form-inline">
+										<input type="email" class="form-control form-control-lg email-catcher" placeholder="mon@adresse.mail" />
+										&nbsp;<button type="submit" class="btn btn-lg btn-secondary">→</button>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-
-				<div class="nav-wrapper">
-					<main-nav :brand="state.meta.name" :menu="state.menu" class="container"></main-nav>
-				</div>
+					<div class="nav-wrapper">
+						<main-nav :brand="state.meta.name" :menu="state.menu" class="container"></main-nav>
+					</div>
+				</header>
 
 				<section>
 					<article-wall :articles="state.articles" class="container"></article-wall>
 				</section>
+
+				<section>
+					<article-wall :articles="state.articles" class="container"></article-wall>
+				</section>
+
+				<footer>
+					<div class="container text-muted text-center small">
+						<p>Les Jeunes Démocrates, tous droits réservés.</p>
+						<p>
+							<a href="">Jeunes Démocrates Européens</a> · 
+							<a href="">Mouvement Démocrate</a> · 
+							<a href="">Parti Démocrate Européen</a>
+						</p>
+						<p>
+							<a href="">Mentions légales</a> · 
+							<a href="">Twitter</a> · 
+							<a href="">Facebook</a>
+						</p>
+					</div>
+				</footer>
 
 			</div>
 	
