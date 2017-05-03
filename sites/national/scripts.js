@@ -7,9 +7,9 @@ function vueSetup() {
 				'name' : "Les Jeunes Démocrates"
 			},
 			'menu' : [
-				{ "name" : "Les actus", "url" : "#" },
-				{ "name" : "Les idées", "url" : "#" },
-				{ "name" : "Les contacts", "children" : [
+				{ "name" : "Présentation", "url" : "#" },
+				{ "name" : "Idées & actus", "url" : "#" },
+				{ "name" : "Contacts", "children" : [
 						{ "name" : "Nationaux", "url" : "#" },
 						{ "name" : "Régionaux", "url" : "#" }
 					]
