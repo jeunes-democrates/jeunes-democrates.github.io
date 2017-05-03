@@ -11,19 +11,26 @@ body { color: white; overflow-x: hidden; filter: grayscale(); }
 }
 
 .title__image {
-	max-height: 12vh;
+	max-height: 16vh;
 	max-width: calc(100% - 2rem);
 	filter: drop-shadow( .15rem .15rem .25rem #000 );
 }
+@media (min-width: 576px) { .title__image { max-height: 12vh; } }
+@media (min-width: 576px) { .header-wrapper { text-align: center; } }
+@media (min-width: 768px) { .header-wrapper { text-align: inherit; } }
 
 .header-wrapper { padding: 4vh 0 6vh; } /* uses header-item to equalize, enables margin between multiple header-items */
+@media (min-width: 576px) { .header-wrapper { padding: 8vh 0 10vh; } }
+
 .header-item { padding-top: 2vh; }
 
-@media (min-width: 576px) {
-	.header-wrapper { padding: 8vh 0 10vh; }
-}
+.email-wrapper { filter: drop-shadow( .15rem .15rem .25rem #000 ); }
+@media (min-width: 576px) { .email-wrapper { text-align: center; } }
+@media (min-width: 768px) { .email-wrapper { text-align: right; } }
+.email-submit { max-height: 96%; border-color: transparent; }
+.form-submit-arrow { height: 1rem; opacity: .7; }
 
-.email-catcher { max-width: 70%; }
+
 
 /* Nav and colors */
 

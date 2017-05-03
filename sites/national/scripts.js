@@ -117,11 +117,15 @@ function vueSetup() {
 										<img class="title__image" src="long-logo-white.svg" :alt="state.meta.name" />
 									</h1>
 								</div>
-								<div class="col-md-6 header-item">
+								<div class="col-md-6 col-lg-5 offset-lg-1 header-item email-wrapper">
 									<h2>Rejoins-nous !</h2>
-									<form class="form-inline">
-										<input type="email" class="form-control form-control-lg email-catcher" placeholder="mon@adresse.mail" />
-										&nbsp;<button type="submit" class="btn btn-lg btn-secondary">→</button>
+									<form>
+										<div class="input-group">
+											<input type="email" placeholder="mon@adresse.mail" class="form-control form-control-lg">
+											<span class="input-group-btn">
+												<button type="submit" class="btn btn-lg btn-secondary email-submit">→</button>
+											</span>
+										</div>
 									</form>
 								</div>
 							</div>
