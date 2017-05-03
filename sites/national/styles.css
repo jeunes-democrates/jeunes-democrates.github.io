@@ -56,6 +56,9 @@ nav.container { padding: 0; }
 	nav.container { padding: 0 .5em; }
 }
 
+
+/* Rotations */
+
 .nav-wrapper { transform: rotate(-1deg); }
 section:nth-child(even)::after { transform: rotate(-1deg); }
 section:nth-child(odd)::after { transform: rotate(1deg); }
