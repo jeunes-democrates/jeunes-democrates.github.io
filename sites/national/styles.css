@@ -46,9 +46,10 @@ nav.container { padding: 0; }
 .nav-link { display: inline-block; color: white !important; border-radius: .25rem; transition: all 0.25s ease-in-out; }
 .dropdown-item { transition: all 0.15s ease-in-out; }
 .dropdown-item:hover, .dropdown-item:active { background-color: transparent; color: #292b2c; }
-.nav-link:hover, .dropdown-item:hover { transform: scale(1.05); background-color: transparent; }
-.nav-link:active, .dropdown-item:active { transform: scale(1.05) translateY(.15em); background-color: transparent; }
+.nav-link:hover, .dropdown-item:hover { transform: scale(1.5); background-color: transparent; }
+.nav-link:active, .dropdown-item:active { transform: scale(1.5) translateY(.15em); background-color: transparent; }
 .nav-link--emphasize { border: 1px solid white; }
+.nav-icon-link:hover { transform: scale(1.25); }
 
 @media (max-width: 1023px) { 
 	.nav-link { background-color: rgba(255,255,255,0.1); margin: 2px 0; }
