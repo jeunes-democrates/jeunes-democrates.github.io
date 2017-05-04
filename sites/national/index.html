@@ -56,7 +56,17 @@
 
 <!-- smooch.io chat widget -->
 <script src="https://cdn.smooch.io/smooch.min.js"></script>
-<script>Smooch.init({appToken: '9bgqx6aphfnffbbxzvygax7a6'});</script>
+<script>
+	Smooch.init({
+		appToken: '9bgqx6aphfnffbbxzvygax7a6',
+		customText: {
+			headerText: 'Bonjour !',
+			introductionText: 'Que pouvons-nous faire pour vous ?',
+			inputPlaceholder: 'Écrire un message...',
+			sendButtonText: 'Envoyer',
+		}
+	});
+</script>
 
 
 
