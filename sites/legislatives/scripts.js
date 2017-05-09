@@ -46,10 +46,10 @@ function vueSetup() {
 
 				<section class="candidateWall container">
 					<div class="candidat" v-for="candidat in state.candidats">
-						<h2>{{ candidat['Prénom'] }} {{ candidat['Nom']}}</h2>
-						<p class="circonscription">{{ candidat['Circonscription']}}</p>
+						<h2>{{ candidat['Prénom'] }} {{ candidat['Nom'] }}</h2>
+						<p class="circonscription">{{ candidat['Circonscription'] }}</p>
 						<p v-if="candidat['Twitter']"><img :src="'https://twitter.com/' + candidat['Twitter'] + '/profile_image?size=bigger'"></p>
-						<p v-if="candidat['Twitter']"><a :href="'https://twitter.com/' + candidat['Twitter']"></a></p>
+						<p v-if="candidat['Twitter']"><a :href="'https://twitter.com/' + candidat['Twitter']">@{{ candidat['Twitter'] }}</a></p>
 					</div>
 				</section>
 
