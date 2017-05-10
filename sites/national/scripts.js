@@ -41,21 +41,6 @@ function vueSetup() {
 	})
 
 
-
-	// DATA FETCHING
-
-	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
-
-	Vue.http.get(_airTable.ListEndpoint('Actus')).then((response) => {
-		var actus = _airTable.Clean(response.body.records) // get first 3 actus
-		actus = actus.filter(function( actu ) {
-			return !actu.hasOwnProperty('Exclure');
-		})
-		actus = actus.slice(0,3)
-		store.commit('updateData', {'articles': actus})
-	})
-
-
 	// COMPONENTS
 
 	Vue.component('article-wall', {
@@ -78,7 +63,27 @@ function vueSetup() {
 			</div>
 		`
 	})
-
+	
+	Vue.component('article-wall', {
+		props: ['articles'],
+		template: `
+			<div class="articleWall">
+				<h2>Idées & actualités</h2>
+				<div class="articleWall__scroller">
+					<template v-for="article in articles">
+						<a v-if="!article.placeholder" class="articleWall__anchor" :href="article.Lien">
+							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
+							<span class="articleWall__title" v-html="article.Titre"></span>
+						</a>
+						<a v-else class="articleWall__anchor articleWall__anchor--placeholder">
+							<div class="articleWall__illustration"></div>
+							<span class="articleWall__title">&nbsp;</span>
+						</a>
+					</template>
+				</div>
+			</div>
+		`
+	})
 
 	Vue.component('dropdown-children', {
 		props: ['children'],
@@ -225,6 +230,19 @@ function vueSetup() {
 				return this.$store.state
 			}
 		}
+	})
+
+	// DATA FETCHING
+
+	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
+
+	Vue.http.get(_airTable.ListEndpoint('Actus')).then((response) => {
+		var actus = _airTable.Clean(response.body.records) // get first 3 actus
+		actus = actus.filter(function( actu ) {
+			return !actu.hasOwnProperty('Exclure');
+		})
+		actus = actus.slice(0,3)
+		store.commit('updateData', {'articles': actus})
 	})
 
 }
