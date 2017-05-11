@@ -232,9 +232,7 @@ function vueSetup() {
 		}
 	})
 
-}
 
-```
 	// DATA FETCHING
 
 	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
@@ -247,5 +245,8 @@ function vueSetup() {
 		actus = actus.slice(0,3)
 		store.commit('updateData', {'articles': actus})
 	})
-```
+
+
+}
+
 
