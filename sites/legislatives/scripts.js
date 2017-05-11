@@ -36,7 +36,7 @@ function vueSetup() {
 
 			<div id="app" lang="fr">
 
-				<div class="container">
+				<div class="container-fluid">
 					<div class="top-wrapper">
 						<h1>
 							Candidats du Mouvement Démocrate aux élections législatives
@@ -44,11 +44,11 @@ function vueSetup() {
 					</div>
 				</div>
 
-				<section class="candidateWall container">
+				<section class="candidateWall container-fluid">
 					<div class="candidat" v-for="candidat in state.candidats">
 						<h2>{{ candidat['Prénom'] }} {{ candidat['Nom'] }}</h2>
 						<p class="circonscription">{{ candidat['Circonscription'] }}</p>
-						<p v-if="candidat['Twitter']"><img :src="'https://twitter.com/' + candidat['Twitter'] + '/profile_image?size=bigger'"></p>
+						<p v-if="candidat['Twitter']"><img class="candidat__portrait" :src="'https://twitter.com/' + candidat['Twitter'] + '/profile_image?size=bigger'"></p>
 						<p v-if="candidat['Twitter']"><a :href="'https://twitter.com/' + candidat['Twitter']">@{{ candidat['Twitter'] }}</a></p>
 					</div>
 				</section>

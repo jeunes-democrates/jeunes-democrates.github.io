@@ -1,4 +1,9 @@
-body { text-align: center; }
-.container { max-width : 36rem; }
+body { text-align: center; background-color: rgba(255,96,0,.010); }
+.container { }
 h1 { margin-top: 2rem; }
 h2 { margin-top: 2rem; }
+
+.candidat { padding: 2rem; border-top: 1px solid #eee; }
+.candidat:nth-child(even) { background-color: rgba(255,96,0,.025); }
+
+.candidat__portrait { border-radius: 4px; }
