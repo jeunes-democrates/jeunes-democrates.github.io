@@ -7,18 +7,13 @@ function vueSetup() {
 				'name' : "Les Jeunes Démocrates"
 			},
 			'menu' : [
+				{ "name" : "Actus & idées", "url" : "#" },
 				{ "name" : "Contacts", "children" : [
 						{ "name" : "Nationaux", "url" : "#" },
 						{ "name" : "Régionaux", "url" : "#" }
 					]
 				},
-				{ "name" : "Espace militants", "children" : [
-						{ "name" : "Actus & idées", "url" : "#" },
-						{ "name" : "Equipe nationale", "url" : "#" },
-						{ "name" : "Postes à pourvoir", "url" : "#" },
-						{ "name" : "Statuts et textes", "url" : "#" }
-					]
-				},
+				{ "name" : "Espace militants", "url" : "#" },
 				{ "name" : "Faire un don", "url" : "#" },
 				{ "name" : "Adhérer", "url" : "#", "emphasize" : true },
 				{ "name" : "Twitter", "icon" : "twitter", "url" : "#" },
@@ -26,9 +21,9 @@ function vueSetup() {
 				{ "name" : "RSS", "icon" : "rss", "url" : "#" }
 			],
 			'articles': [
-				{"placeholder" : true },
-				{"placeholder" : true },
-				{"placeholder" : true }
+				{ "placeholder" : true },
+				{ "placeholder" : true },
+				{ "placeholder" : true }
 			],
 		},
 		mutations: {
@@ -40,6 +35,13 @@ function vueSetup() {
 		}
 	})
 
+	//	, "children" : [
+	//		{ "name" : "Actus & idées", "url" : "#" },
+	//		{ "name" : "Equipe nationale", "url" : "#" },
+	//		{ "name" : "Missions à pourvoir", "url" : "#" },
+	//		{ "name" : "Statuts et textes", "url" : "#" }
+	//	]
+				
 
 	// COMPONENTS
 
