@@ -36,22 +36,28 @@ function vueSetup() {
 
 			<div id="app" lang="fr">
 
-				<div class="container-fluid">
-					<div class="top-wrapper">
-						<h1>
-							Candidats du Mouvement Démocrate aux élections législatives
-						</h1>
+				<nav>
+					<div class="nav-wrapper">
+						<span class="brand-logo center">Candidats MoDem aux législatives</span>
+					</div>
+				</nav>
+
+				<div class="row">
+					<div class="col s12 m6 l4 xl3" v-for="candidat in state.candidats">
+						<div class="card">
+							<div class="card-content">
+								<span class="card-title">{{ candidat['Prénom'] }} {{ candidat['Nom'] }}</span>
+								<img class="candidat__portrait" :src="'https://twitter.com/' + candidat['Twitter'] + '/profile_image?size=bigger'">
+								<p class="circonscription">{{ candidat['Circonscription'] }}</p>
+							</div>
+							<div class="card-action">
+								<a v-if="candidat['Twitter']" :href="'https://twitter.com/' + candidat['Twitter']">Twitter</a>
+								<a v-if="candidat['Site']" :href="candidat['Site']">Site</a>
+								<span>&nbsp;</span>
+							</div>
+						</div>
 					</div>
 				</div>
-
-				<section class="candidateWall container-fluid">
-					<div class="candidat" v-for="candidat in state.candidats">
-						<h2>{{ candidat['Prénom'] }} {{ candidat['Nom'] }}</h2>
-						<p class="circonscription">{{ candidat['Circonscription'] }}</p>
-						<p v-if="candidat['Twitter']"><img class="candidat__portrait" :src="'https://twitter.com/' + candidat['Twitter'] + '/profile_image?size=bigger'"></p>
-						<p v-if="candidat['Twitter']"><a :href="'https://twitter.com/' + candidat['Twitter']">@{{ candidat['Twitter'] }}</a></p>
-					</div>
-				</section>
 
 			</div>
 	
