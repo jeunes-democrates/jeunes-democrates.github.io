@@ -21,7 +21,7 @@ function vueSetup() {
 	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appBhCJCYLiO1wmoj')
 
 	Vue.http.get(_airTable.ListEndpoint('Candidats')).then((response) => {
-		var candidats = _airTable.Clean(response.body.records) // get first 3 actus
+		var candidats = _airTable.Clean(response.body.records)
 		candidats = candidats.filter(function( candidat ) {
 			return !candidat.hasOwnProperty('Cacher');
 		})

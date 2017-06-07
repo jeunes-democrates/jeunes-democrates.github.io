@@ -1,15 +1,25 @@
 function vueSetup() {
 	// Store
-	var store = new Vuex.Store({
+	window.store = new Vuex.Store({
 		state: {
 			jobs: [],
 		},
 		mutations: {
-			updateJobs(state, payload) {
-				state.jobs = payload
-				console.log(payload)
+			updateData(state, payload) {
+				for (param in payload) {
+					state[param] = payload[param]
+				}
 			}
 		}
+	})
+
+
+	// DATA FETCHING
+
+	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
+	Vue.http.get(_airTable.ListEndpoint('Postes ouverts')).then((response) => {
+		var jobs = _airTable.Clean(response.body.records)
+		store.commit('updateData', {'jobs': jobs})
 	})
 
 
@@ -18,7 +28,7 @@ function vueSetup() {
 		template: `
 			<div class="jobboard__jobs" lang="fr">
 
-				<div class="jobboard__column-wrapper" v-for="job in jobs">
+				<div class="jobboard__column-wrapper" v-for="job in jobs" v-if="!job.Hide">
 				<div class="jobboard__job slideUp">
 	
 					<div class="jobboard__job__header">
@@ -44,11 +54,6 @@ function vueSetup() {
 		}
 	}
 	
-	Vue.http.get('https://api.airtable.com/v0/appHznRjE909j9VlP/Postes ouverts?api_key=keyQ9LAVuNmhIIhjN').then((response) => {
-		var jobs = airTable(response.body.records)
-		store.commit('updateJobs', jobs)
-	})
-	
 	
 	// App
 	var app = new Vue({
@@ -61,26 +66,4 @@ function vueSetup() {
 			</div>
 		`
 	})
-}
-
-var airTable = function(object) {
-	// AirTable objects have a "field" property which contains their actual data
-	// This is to clean up the airtable objects
-	try {
-		if (object.constructor === Array) {
-			for (i in object) {
-				var airTableId = object[i].id
-				object[i] = object[i].fields
-				object[i].airTableId = airTableId
-			} 
-		} else {
-			var airTableId = object.id
-			object = object.fields
-			object.airTableId = airTableId
-		}
-		return object
-	} catch (err) {
-		console.error(err.message)
-		return false
-	}
 }
