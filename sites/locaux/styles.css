@@ -1,0 +1,31 @@
+body {
+	background-color: #FF6000;
+	background-image: url('orange-canvas.png');
+	background-size: cover;
+	background-attachment: fixed;
+	font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
+.sheet {
+	max-width: 1040px;
+	margin: 10vh auto;
+	background-color: white;
+	background-image: url('https://d1wli5mq9yq9mw.cloudfront.net/static/images/bg_main.gif');
+	min-height: 100vh;
+	box-shadow : 0 0 4rem -1rem #000;
+	color: #224; /* gray with a slight blue tint */
+}
+
+section {
+	border-top: 4px dashed rgba(255,96,0,.25);
+	padding: 2rem;
+}
+
+section:first-child { border-top: none; }
+
+
+/* Headers & Headings */
+
+.site-header, .section-heading { text-align: center; font-family: 'Century Gothic', Helvetica, sans-serif; font-variant: small-caps; }
+.site-name { display: block; font-size: 3rem; }
+.site-description { display: block; font-size: 1.4rem; }
