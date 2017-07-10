@@ -45,14 +45,30 @@ function vueSetup() {
 
 			<div class="sheet" lang="fr">
 
-				<section v-if="site.name || site.description">
+				<section v-if="site.name || site.description" class="header">
 
 					<h1 class="site-header">
 						<span v-if="site.name" class="site-name">{{ site.name }}</span>
 						<span v-if="site.description" class="site-description">{{ site.description }}</span>
 					</h1>
 
-					<nav>Actualités · L'équipe · Contactez-nous</nav>
+					<nav class="nav">
+						<span class="nav__item">
+							<a class="nav__link" href="#">
+								Actualités
+							</a>
+						</span>
+						<span class="nav__item">
+							<a class="nav__link" href="#">
+								L'équipe
+							</a>
+						</span>
+						<span class="nav__item">
+							<a class="nav__link" href="#">
+								Contactez-nous
+							</a>
+						</span>
+					</nav>
 
 
 				</section>
