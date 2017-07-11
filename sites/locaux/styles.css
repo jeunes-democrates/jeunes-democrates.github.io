@@ -1,3 +1,8 @@
+html {
+	font-size: 20px;
+	line-height: 1.5;
+}
+
 body {
 	background-color: #FF6000;
 	background-image: url('orange-canvas.png');
@@ -16,19 +21,21 @@ body {
 	color: #224; /* gray with a slight blue tint */
 }
 
-section { padding: 2rem; }
-section:not(:first-child) { border-top: 4px dashed rgba(255,96,0,.25); }
+section { padding: 2rem 4rem; }
+section:not(:first-child) { border-top: 2px dotted #ddd; }
 
 
 /* Headers & Headings */
 
-.site-header, .section-heading { text-align: center; font-family: 'Century Gothic', Helvetica, sans-serif; font-variant: small-caps; }
-.site-name { display: block; font-size: 3rem; }
-.site-description { display: block; font-size: 1.4rem; }
+.site-header, .section-heading { text-align: center; }
+.site-name { display: block; font-size: 2.4rem; font-family: 'Century Gothic', Helvetica, sans-serif; font-variant: small-caps; }
+.site-description { display: block; font-size: 1rem; }
+.section-heading { font-family: 'Roboto Slab', serif; }
 
-.nav { display: flex; justify-content: center; margin-top: 1rem; }
+section.nav-section { padding-top: 1rem; padding-bottom: 1rem; } /* exception to the normal section padding */
+.nav { display: flex; justify-content: center; }
 .nav_item { display: inline-flex; }
 .nav__link { padding: .25rem .50rem; border-radius: .1rem; }
-.nav__item:not(:first-child)::before { content: '·'; }
+.nav__spacer:last-child { display: none; }
 .nav__link:link, .nav__link:hover, .nav__link:active, .nav__link:visited { text-decoration: none; color: inherit; }
 .nav__link:hover { background-color: rgba(0,0,0,.15); }
