@@ -1,3 +1,9 @@
+var introText = `
+**Lorem ipsum dolor sit amet**, consectetur adipiscing elit. Morbi nec vehicula risus. Nam lacus neque, tristique in dignissim et, tristique vitae nibh. Phasellus hendrerit rhoncus eros, quis aliquam ex maximus sit amet. Vestibulum sapien felis, consequat sit amet efficitur quis, congue et magna. Mauris tempor vehicula turpis, eu viverra quam egestas quis. In eu nulla eu sapien molestie feugiat ut sit amet metus. Fusce bibendum nunc risus, a ornare enim posuere in. Nunc hendrerit pharetra justo vitae gravida. Donec interdum vehicula auctor. Vestibulum consequat ex vulputate, porta felis et, tincidunt ex. Nullam ac condimentum elit. Vestibulum at porttitor orci. Duis molestie blandit ipsum et molestie.
+
+Vivamus maximus faucibus metus, in semper nunc [faucibus](http://twitter.com) id. Praesent et velit molestie ante venenatis condimentum vel quis orci. Ut est tortor, interdum id sapien at, convallis dignissim enim. Pellentesque fringilla sollicitudin mi, sagittis finibus tellus fermentum vitae. Donec ut elit sem. Phasellus laoreet dolor sit amet augue eleifend ullamcorper. Sed aliquet bibendum accumsan. Ut vehicula nunc id interdum pretium. Praesent in quam pellentesque magna iaculis aliquet. Donec iaculis tincidunt dolor sit amet semper. Donec vulputate velit eget dapibus fringilla. Proin vitae efficitur urna. Vestibulum eget euismod purus, a pellentesque nibh. Vestibulum pretium fringilla ornare. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quis pulvinar nulla. 
+						`
+
 function vueSetup() {
 	// Store
 	window.store = new Vuex.Store({
@@ -6,19 +12,50 @@ function vueSetup() {
 				'name': "Jeunes Démocrates d'Alsace",
 				'description': "Groupe local représentant les jeunes adhérents du Mouvement Démocrate",
 				'nav': true,
-				'modules': {
-					'intro': {
+				'modules': [
+					{
+						'type': 'intro',
 						'title': 'Présentation',
-						'text': `
-**Lorem ipsum dolor sit amet**, consectetur adipiscing elit. Morbi nec vehicula risus. Nam lacus neque, tristique in dignissim et, tristique vitae nibh. Phasellus hendrerit rhoncus eros, quis aliquam ex maximus sit amet. Vestibulum sapien felis, consequat sit amet efficitur quis, congue et magna. Mauris tempor vehicula turpis, eu viverra quam egestas quis. In eu nulla eu sapien molestie feugiat ut sit amet metus. Fusce bibendum nunc risus, a ornare enim posuere in. Nunc hendrerit pharetra justo vitae gravida. Donec interdum vehicula auctor. Vestibulum consequat ex vulputate, porta felis et, tincidunt ex. Nullam ac condimentum elit. Vestibulum at porttitor orci. Duis molestie blandit ipsum et molestie.
-
-Vivamus maximus faucibus metus, in semper nunc [faucibus](http://twitter.com) id. Praesent et velit molestie ante venenatis condimentum vel quis orci. Ut est tortor, interdum id sapien at, convallis dignissim enim. Pellentesque fringilla sollicitudin mi, sagittis finibus tellus fermentum vitae. Donec ut elit sem. Phasellus laoreet dolor sit amet augue eleifend ullamcorper. Sed aliquet bibendum accumsan. Ut vehicula nunc id interdum pretium. Praesent in quam pellentesque magna iaculis aliquet. Donec iaculis tincidunt dolor sit amet semper. Donec vulputate velit eget dapibus fringilla. Proin vitae efficitur urna. Vestibulum eget euismod purus, a pellentesque nibh. Vestibulum pretium fringilla ornare. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quis pulvinar nulla. 
-						`
+						'content': introText
 					},
-					'team': false,
-					'contact': false,
+//					{
+//						'type': 'news',
+//						'newsItems': [
+//							{
+//								'title': '',
+//							}
+//						]
+//					},
+					{
+						'type': 'team',
+						'title': 'Notre équipe',
+						'teamMembers': [
+							{
+								'name': '',
+								'title': '',
+								'description': '',
+								'twitter': '',
+							},
+							{
+								'name': '',
+								'title': '',
+								'description': '',
+								'twitter': '',
+							},
+							{
+								'name': '',
+								'title': '',
+								'description': '',
+								'twitter': '',
+							}
+						]
+					},
+					{
+						'type': 'contact',
+						'title': 'Contactez-nous'
+					},
+				],
 //					'news': false, // not yet ready
-				},
 				'facebookFeed': 'jeunes-democrates',
 				'twitterFeed': 'J_Democrates'
 			}
@@ -33,15 +70,46 @@ Vivamus maximus faucibus metus, in semper nunc [faucibus](http://twitter.com) id
 	})
 
 	Vue.component('site-intro', {
-		props: ['intro'],
+		props: ['module'],
 		template: `
 			<section class="site-intro">
 
-				<h2 v-if="intro.title" class="section-heading intro__title">
-					{{ intro.title }}
+				<h2 v-if="module.title" class="section-heading intro__title">
+					{{ module.title }}
 				</h2>
 
-				<div class="intro__text" v-html="marked(intro.text)"></div>
+				<div class="intro__text" v-html="marked(module.content)"></div>
+
+			</section>
+		`
+	})
+
+	Vue.component('site-team', {
+		props: ['module'],
+		template: `
+			<section class="site-team">
+
+				<h2 v-if="module.title" class="section-heading intro__title">
+					{{ module.title }}
+				</h2>
+
+				<div class="team__members">
+					<div v-if="module.teamMembers" class="team__member">
+					</div>
+				</div>
+
+			</section>
+		`
+	})
+
+	Vue.component('site-contact', {
+		props: ['module'],
+		template: `
+			<section class="site-contact">
+
+				<h2 v-if="module.title" class="section-heading intro__title">
+					{{ module.title }}
+				</h2>
 
 			</section>
 		`
@@ -51,16 +119,16 @@ Vivamus maximus faucibus metus, in semper nunc [faucibus](http://twitter.com) id
 		// This module is not ready for use yet,
 		// as it needs to load the actual articles,
 		// which we can't handle yet
-		props: ['news'],
+		props: ['module'],
 		template: `
 			<section class="site-news">
 
-				<h2 class="section-heading">
-					Actualités
+				<h2 v-if="module.title" class="section-heading news__title">
+					{{ module.title }}
 				</h2>
 
 				<div class="news__list">
-					<div v-for"newsItem in news.items" class="news__item">
+					<div v-for"newsItem in module.newsItems" class="news__item">
 						<div class="news__item__illustration"></div>
 						<div class="news__item__title"></div>
 						<div class="news__item__description"></div>
@@ -117,9 +185,29 @@ Vivamus maximus faucibus metus, in semper nunc [faucibus](http://twitter.com) id
 
 				</section>
 
-				<site-intro v-if="site.modules.intro" :intro="site.modules.intro"></site-intro>
+				<template v-for="module in site.modules">
 
-				<site-news v-if="site.modules.news" :news="site.modules.news"></site-news>
+					<site-intro
+						v-if="module.type == 'intro'"
+						:module="module"
+						></site-intro>
+
+					<site-news
+						v-if="module.type == 'news'"
+						:module="module"
+						></site-news>
+
+					<site-team
+						v-if="module.type == 'team'"
+						:module="module"
+						></site-team>
+
+					<site-contact
+						v-if="module.type == 'contact'"
+						:module="module"
+						></site-contact>
+
+				</template>
 
 				<section>
 
