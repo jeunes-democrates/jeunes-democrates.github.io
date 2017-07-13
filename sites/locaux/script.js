@@ -206,7 +206,7 @@ function vueSetup() {
 				<section v-if="site.nav" class="nav-section" >
 
 					<nav class="nav">
-						<template v-for="module in site.modules">
+						<template v-for="module in site.modules" v-if="module.title">
 							<nav-item
 								:label="module.title"
 								:anchor="'#' + module.title"
