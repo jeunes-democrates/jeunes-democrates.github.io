@@ -73,5 +73,6 @@ section.nav-section { padding-top: 1rem; padding-bottom: 1rem; } /* exception to
 
 
 .contact__form { max-width: 600px; margin: auto; text-align: center; }
-.contact__form__email, .contact__form__message { font-family: 'Trebuchet MS', Helvetica, sans-serif; font-size: .8rem; }
 .contact__intro { text-align: center; font-style: italic; font-size: .8em; }
+.contact__form__email, .contact__form__message { font-family: 'Trebuchet MS', Helvetica, sans-serif; font-size: .8rem; }
+.contact__form label, .contact__form__submit { margin-top: 1rem !important; }

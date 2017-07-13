@@ -143,7 +143,7 @@ function vueSetup() {
 					<textarea name="message" class="contact__form__message pure-input-1" placeholder="..."/>
 					<label for="email">Votre adresse email :</label>
 					<input type="email" name="email" class="contact__form__email pure-input-1" placeholder="@"/>
-					<button type="submit" class="pure-button pure-button-primary">Envoyer</button>
+					<button type="submit" class="contact__form__submit pure-button pure-button-primary">Envoyer</button>
 				</form>
 
 			</div>
