@@ -16,6 +16,7 @@ body {
 .sheet {
 	max-width: 1040px;
 	margin: 10vh auto;
+	border-radius: 2px;
 	background-color: white;
 	background-image: url('https://d1wli5mq9yq9mw.cloudfront.net/static/images/bg_main.gif');
 	min-height: 100vh;
@@ -47,6 +48,8 @@ section.nav-section { padding-top: 1rem; padding-bottom: 1rem; } /* exception to
 .nav__spacer:last-child { display: none; }
 .nav__link:link, .nav__link:hover, .nav__link:active, .nav__link:visited { text-decoration: none; color: inherit; }
 .nav__link:hover { background-color: rgba(0,0,0,.15); }
+
+
 
 
 /* Utilities */
