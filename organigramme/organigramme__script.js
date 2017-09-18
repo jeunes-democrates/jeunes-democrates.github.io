@@ -41,40 +41,55 @@ function organigrammeSetup() {
 	})
 	
 	// Components
-	var Organogram = {
-		template: `
-			<div class="organigramme__poles">
-	
-				<div class="organigramme__column-wrapper" v-for="pole in poles">
-				<div class="organigramme__pole slideUp">
-	
-					<div class="organigramme__pole__header">
-						<div class="organigramme__pole__name">{{ pole.Name }}</div>
-						<a v-if="pole.Email" class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter ></a>
-					</div>
-					
-					<div class="organigramme__membres">
-						<div class="organigramme__membre" v-for="Membre in pole.Membres" v-bind:class="{ small: !Membre.UM }" v-if="!Membre.Hide">
-							<div class="organigramme__membre__photo" v-bind:style="{ backgroundImage: 'url(' + Membre.Photo + ')' }"></div>
-							<div class="oranigramme__membre__info">
-								<div class="organigramme__membre__name">
-									{{ Membre.Prénom }} <strong>{{ Membre.Nom }}</strong>
-								</div>
-								<div class="organigramme__membre__titre">{{ Membre.Rôle }}</div>
-								<div class="organigramme__membre__liens">
-									<a v-if="Membre.Twitter" class="organigramme__twitter organigramme__bouton"
-										v-bind:href="'https://twitter.com/' + Membre.Twitter" target="_blank"
-										>@{{ Membre.Twitter }}</a>
-								</div>
+
+	Vue.component('organigramme-pole', {
+		props: ['pole'],
+		template : `
+			<div class="organigramme__pole slideUp">
+		
+				<div class="organigramme__pole__header">
+					<div class="organigramme__pole__name">{{ pole.Name }}</div>
+					<a v-if="pole.Email" class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter ></a>
+				</div>
+				
+				<div class="organigramme__membres">
+					<div class="organigramme__membre" v-for="Membre in pole.Membres" v-bind:class="{ small: !Membre.UM }" v-if="!Membre.Hide">
+						<div class="organigramme__membre__photo" v-bind:style="{ backgroundImage: 'url(' + Membre.Photo + ')' }"></div>
+						<div class="oranigramme__membre__info">
+							<div class="organigramme__membre__name">
+								{{ Membre.Prénom }} <strong>{{ Membre.Nom }}</strong>
+							</div>
+							<div class="organigramme__membre__titre">{{ Membre.Rôle }}</div>
+							<div class="organigramme__membre__liens">
+								<a v-if="Membre.Twitter" class="organigramme__twitter organigramme__bouton"
+									v-bind:href="'https://twitter.com/' + Membre.Twitter" target="_blank"
+									>@{{ Membre.Twitter }}</a>
 							</div>
 						</div>
 					</div>
-	
 				</div>
-				</div>
+			</div>
+			`
+	})
 
+	var Organogram = {
+		template: `
+			<div>
+				<div class="organigramme__poles">
+					<organigramme-pole
+						v-for="pole in poles"
+						v-if="pole.Name != 'Autres membres'"
+						:pole=pole
+						class="organigramme__column-wrapper"
+						></organigramme-pole>
+				</div>
+				<organigramme-pole
+					v-for="pole in poles"
+					v-if="pole.Name == 'Autres membres'"
+					:pole=pole
+					class="autres_membres"
+					></organigramme-pole>
 				<div class="spinner hide-if-not-first"></div>
-	
 			</div>
 		`,
 		computed: {
