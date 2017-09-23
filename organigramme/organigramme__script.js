@@ -49,7 +49,11 @@ function organigrammeSetup() {
 		
 				<div class="organigramme__pole__header">
 					<div class="organigramme__pole__name">{{ pole.Name }}</div>
-					<a v-if="pole.Email" class="organigramme__pole__email organigramme__bouton" v-bind:href="'mailto:' + pole.Email">Contacter ></a>
+					<a
+						v-if="pole.Slug"
+						class="organigramme__pole__email organigramme__bouton"
+						v-bind:href="'http://jeunes-democrates.org/contact/?your-subject=' + pole.Slug + ' : '"
+						>Contacter ></a>
 				</div>
 				
 				<div class="organigramme__membres">
