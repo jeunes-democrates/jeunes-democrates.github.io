@@ -45,41 +45,39 @@ function vueSetup() {
 
 	// COMPONENTS
 
-	Vue.component('article-wall', {
-		props: ['articles'],
+	Vue.component('presentation-block', {
 		template: `
 			<div class="articleWall">
-				<h2>Idées & actualités</h2>
+				<h2>Présentation</h2>
 				<div class="articleWall__scroller">
-					<template v-for="article in articles">
-						<a v-if="!article.placeholder" class="articleWall__anchor" :href="article.Lien">
-							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
-							<span class="articleWall__title" v-html="article.Titre"></span>
-						</a>
-						<a v-else class="articleWall__anchor articleWall__anchor--placeholder">
-							<div class="articleWall__illustration"></div>
-							<span class="articleWall__title">&nbsp;</span>
-						</a>
-					</template>
+					<a class="articleWall__anchor">
+						<div class="articleWall__illustration" style="background-image: url('http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg');"></div>
+						<span class="articleWall__title">Notre équipe</span>
+					</a>
+					<a class="articleWall__anchor">
+						<div class="articleWall__illustration" style="background-image: url('http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg');"></div>
+						<span class="articleWall__title">Nos activités</span>
+					</a>
+					<a class="articleWall__anchor">
+						<div class="articleWall__illustration" style="background-image: url('http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg');"></div>
+						<span class="articleWall__title">Notre histoire</span>
+					</a>
 				</div>
 			</div>
 		`
 	})
 	
-	Vue.component('article-wall', {
+	Vue.component('article-block', {
 		props: ['articles'],
 		template: `
 			<div class="articleWall">
 				<h2>Idées & actualités</h2>
 				<div class="articleWall__scroller">
 					<template v-for="article in articles">
-						<a v-if="!article.placeholder" class="articleWall__anchor" :href="article.Lien">
-							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.Illustration[0].thumbnails.large.url + ')' }"></div>
+						<a class="articleWall__anchor" :href="article.link">
+							<!-- pubDate, guid, author-->
+							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.thumbnail + ')' }"></div>
 							<span class="articleWall__title" v-html="article.Titre"></span>
-						</a>
-						<a v-else class="articleWall__anchor articleWall__anchor--placeholder">
-							<div class="articleWall__illustration"></div>
-							<span class="articleWall__title">&nbsp;</span>
 						</a>
 					</template>
 				</div>
@@ -201,11 +199,11 @@ function vueSetup() {
 				</header>
 
 				<section>
-					<article-wall :articles="state.articles" class="container"></article-wall>
+					<presentation-block class="container"></presentation-block>
 				</section>
 
 				<section>
-					<article-wall :articles="state.articles" class="container"></article-wall>
+					<article-block :articles="state.articles" class="container"></article-block>
 				</section>
 
 				<footer>
@@ -237,17 +235,22 @@ function vueSetup() {
 
 	// DATA FETCHING
 
-	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
+	function getThumbnail(article) {
+		console.log(article)
+		var thumbnail = article.description
+			.match("https:\/\/cdn-images-1.medium.com\/max\/960\/([^.]*).jpeg")[0]
+			.replace("/960/", "/320/") 
+		console.log(thumbnail)
+		return thumbnail
+	}
 
-	Vue.http.get(_airTable.ListEndpoint('Actus')).then((response) => {
-		var actus = _airTable.Clean(response.body.records) // get first 3 actus
-		actus = actus.filter(function( actu ) {
-			return !actu.hasOwnProperty('Exclure');
-		})
-		actus = actus.slice(0,3)
+	Vue.http.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40JeunesDemocrates")
+	.then((response) => {
+		var actus = response.body.items
+		console.log(actus)
+		for (i in actus) { actus[i].thumbnail = getThumbnail(actus[i]) }
 		store.commit('updateData', {'articles': actus})
 	})
-
 
 }
 
