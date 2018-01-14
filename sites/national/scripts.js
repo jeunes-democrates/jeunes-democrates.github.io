@@ -13,18 +13,35 @@ function vueSetup() {
 						{ "name" : "Régionaux", "url" : "#" }
 					]
 				},
-				{ "name" : "Espace militants", "url" : "#" },
-				{ "name" : "Faire un don", "url" : "#" },
-				{ "name" : "Adhérer", "url" : "#", "emphasize" : true },
-				{ "name" : "Twitter", "icon" : "twitter", "url" : "#" },
-				{ "name" : "Facebook", "icon" : "facebook", "url" : "#" },
-				{ "name" : "RSS", "icon" : "rss", "url" : "#" }
+//				{ "name" : "Espace militants", "url" : "#" },
+//				{ "name" : "Faire un don", "url" : "#" },
+//				{ "name" : "Adhérer", "url" : "#", "emphasize" : true },
+				{ "name" : "Twitter", "icon" : "twitter", "url" : "https://twitter.com/J_Democrates" },
+				{ "name" : "Facebook", "icon" : "facebook", "url" : "https://facebook.com/JeunesDemocrates" },
+				{ "name" : "RSS", "icon" : "rss", "url" : "https://medium.com/feed/133b" }
 			],
 			'articles': [
 				{ "placeholder" : true },
 				{ "placeholder" : true },
 				{ "placeholder" : true }
 			],
+			'presentation': [
+				{
+					'title': "Notre équipe",
+					'thumbnail': "http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg",
+					'link': "#"
+				},
+				{
+					'title': "Nos actions et évènements",
+					'thumbnail': "http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg",
+					'link': "#"
+				},
+				{
+					'title': "Nos valeurs et notre histoire",
+					'thumbnail': "http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg",
+					'link': "#"
+				}
+			]
 		},
 		mutations: {
 			updateData(state, payload) {
@@ -45,39 +62,16 @@ function vueSetup() {
 
 	// COMPONENTS
 
-	Vue.component('presentation-block', {
-		template: `
-			<div class="articleWall">
-				<h2>Présentation</h2>
-				<div class="articleWall__scroller">
-					<a class="articleWall__anchor">
-						<div class="articleWall__illustration" style="background-image: url('http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg');"></div>
-						<span class="articleWall__title">Notre équipe</span>
-					</a>
-					<a class="articleWall__anchor">
-						<div class="articleWall__illustration" style="background-image: url('http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg');"></div>
-						<span class="articleWall__title">Nos activités</span>
-					</a>
-					<a class="articleWall__anchor">
-						<div class="articleWall__illustration" style="background-image: url('http://www.publicdomainpictures.net/pictures/140000/velka/rainbow-1445337690d8q.jpg');"></div>
-						<span class="articleWall__title">Notre histoire</span>
-					</a>
-				</div>
-			</div>
-		`
-	})
-	
 	Vue.component('article-block', {
-		props: ['articles'],
+		props: ['articles', 'title'],
 		template: `
 			<div class="articleWall">
-				<h2>Idées & actualités</h2>
+				<h2>{{ title }}</h2>
 				<div class="articleWall__scroller">
 					<template v-for="article in articles">
-						<a class="articleWall__anchor" :href="article.link">
-							<!-- pubDate, guid, author-->
+						<a class="articleWall__anchor" :href="article.link" target="_blank">
 							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.thumbnail + ')' }"></div>
-							<span class="articleWall__title" v-html="article.Titre"></span>
+							<div class="articleWall__title">{{ article.title }}</div>
 						</a>
 					</template>
 				</div>
@@ -89,7 +83,9 @@ function vueSetup() {
 		props: ['children'],
 		template: `
 			<div class="dropdown-menu">
-				<a v-for="link in children" class="dropdown-item" :href="link.url" v-html="link.name"></a>
+				<a v-for="link in children" class="dropdown-item" :href="link.url">
+					{{ link.name }}
+				</a>
 			</div>
 		`
 	})
@@ -107,6 +103,7 @@ function vueSetup() {
 					'nav-link--emphasize': emphasize,
 					'dropdown-toggle': children
 					}"
+				target="_blank"
 				>
 				<i :class="getIconClass()"></i>
 			</a>
@@ -120,7 +117,6 @@ function vueSetup() {
 		props: ['text', 'url', 'children', 'emphasize'],
 		template: `
 			<a
-				v-html="text"
 				:href="children ? '#' : url"
 				:data-toggle="children ? 'dropdown' : ''"
 				:class="{
@@ -129,7 +125,7 @@ function vueSetup() {
 					'nav-link--emphasize': emphasize,
 					'dropdown-toggle': children
 					}"
-				>
+				>{{ text }}
 			</a>
 		`
 	})
@@ -199,11 +195,18 @@ function vueSetup() {
 				</header>
 
 				<section>
-					<presentation-block class="container"></presentation-block>
+					<article-block
+						:articles="state.presentation"
+						class="container"
+						></article-block>
 				</section>
 
 				<section>
-					<article-block :articles="state.articles" class="container"></article-block>
+					<article-block
+						:articles="state.articles"
+						:title="'Idées & actualités'"
+						class="container"
+						></article-block>
 				</section>
 
 				<footer>
@@ -236,18 +239,15 @@ function vueSetup() {
 	// DATA FETCHING
 
 	function getThumbnail(article) {
-		console.log(article)
 		var thumbnail = article.description
 			.match("https:\/\/cdn-images-1.medium.com\/max\/960\/([^.]*).jpeg")[0]
 			.replace("/960/", "/320/") 
-		console.log(thumbnail)
 		return thumbnail
 	}
 
-	Vue.http.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40JeunesDemocrates")
+	Vue.http.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F133b")
 	.then((response) => {
 		var actus = response.body.items
-		console.log(actus)
 		for (i in actus) { actus[i].thumbnail = getThumbnail(actus[i]) }
 		store.commit('updateData', {'articles': actus})
 	})

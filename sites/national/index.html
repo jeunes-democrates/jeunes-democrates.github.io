@@ -7,32 +7,34 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Les Jeunes Démocrates</title>
-	<link rel="shortcut icon" href="logo.png" type="image/x-icon" />
 
-	<meta name="description" content="Générateur de visuels ! !">
 	<meta name="author" content="">
 
-	<meta property="og:title" content="Les Jeunes Démocrates">
+	<title>Les Jeunes Démocrates</title>
 	<meta property="og:site_name" content="Les Jeunes Démocrates">
-	<meta property="og:description" content="Rejoins les Jeunes Démocrates aux côtés de François Bayrou !">
+
+	<meta property="og:title" content="Les Jeunes Démocrates">
+
+	<meta property="og:description" content="Tes idées ont un temps d'avance ?">
+	<meta name="description" content="Tes idées ont un temps d'avance ?">
+
 	<meta property="og:image" content="http://jeunes-democrates.github.io/sites/national/meeting.jpg">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" type="text/css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" type="text/css">
+
+	<link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="styles.css" type="text/css">
+
 </head>
 
 <div id="app"></div>
 
 <!-- vue -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.1/vue.min.js"></script>
-
-<!-- vuex -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.2.1/vuex.min.js"></script>
-
-<!-- vue-resource -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.1/vue-resource.min.js"></script>
+<script src="node_modules/vue/dist/vue.min.js"></script>
+<script src="node_modules/vuex/dist/vuex.min.js"></script>
+<script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
 
 <!-- custom airtable -->
 <script src="../../airtable.js"></script>
@@ -42,19 +44,10 @@
 
 <script>vueSetup()</script>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<!-- tether -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-
-<!-- bootstrap 4 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-
 <!-- non-critical css -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
 
-<!-- smooch.io chat widget -->
+<!-- smooch.io chat widget
 <script src="https://cdn.smooch.io/smooch.min.js"></script>
 <script>
 	Smooch.init({
@@ -67,5 +60,6 @@
 		}
 	});
 </script>
+-->
 
 </html>
