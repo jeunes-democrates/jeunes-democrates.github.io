@@ -21,7 +21,7 @@ function vueSetup() {
 	var _airTable = new airTable(apiKey='keyiXWAznJ80FXmtW', appKey='appfukGiseC6qP8yb')
 
 	Vue.http.get(_airTable.ListEndpoint('Newsletters')).then((response) => {
-		var newsletter = _airTable.Clean(response.body.records)[response.body.records.length-1]
+		var newsletter = _airTable.Clean(response.body.records)[0]
 		store.commit('updateNewsletter', {'meta': newsletter})
 
 		if (newsletter.hasOwnProperty('Edito')) {
