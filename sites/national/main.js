@@ -1,4 +1,13 @@
-function vueSetup() {
+requirejs.config({ nodeRequire: require });
+
+requirejs([
+	'node_modules/vue/dist/vue.js',
+	'node_modules/vuex/dist/vuex.js',
+	'node_modules/vue-resource/dist/vue-resource.js'
+	], function(Vue, Vuex, VueResource) {
+
+	Vue.use(Vuex)
+	Vue.use(VueResource)
 
 	// Store
 	window.store = new Vuex.Store({
@@ -172,7 +181,7 @@ function vueSetup() {
 							<div class="row header-wrapper">
 								<div class="col-md-6 header-item">
 									<h1>
-										<img class="title__image" src="long-logo-white.svg" :alt="state.meta.name" />
+										<img class="title__image" src="media/long-logo-white.svg" :alt="state.meta.name" />
 									</h1>
 								</div>
 								<div class="col-md-6 col-lg-5 offset-lg-1 header-item email-wrapper">
@@ -239,12 +248,13 @@ function vueSetup() {
 	// DATA FETCHING
 
 	function getThumbnail(article) {
-		var articleImages = article.description.match("https:\/\/cdn-images-1.medium.com\/max\/960\/([^.]*).jpeg")
+		console.log(article.description)
+		var articleImages = article.description.match("https:\/\/cdn-images-1.medium.com\/max\/960\/([^.]*).(jpg|png|jpeg)")
 		if (articleImages) {
 			var thumbnail = articleImages[0].replace("/960/", "/320/")
 			return thumbnail
-		} else { 
-			return "meeting.jpg"
+		} else {
+			return "media/meeting.jpg"
 		}	
 	}
 
@@ -257,6 +267,4 @@ function vueSetup() {
 		store.commit('updateData', {'articles': actus})
 	})
 
-}
-
-
+})

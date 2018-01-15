@@ -6,6 +6,10 @@ bootstrap@4.0.0-beta.3:
   version "4.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.3.tgz#60f0660bc3d121176514b361f6f83201c7ff8874"
 
+clarinet@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/clarinet/-/clarinet-0.12.0.tgz#001d17e22124a62db1b174d9383420ffc933aeaf"
+
 decompress-response@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/decompress-response/-/decompress-response-3.3.0.tgz#80a4dd323748384bfa248083622aedec982adff3"
@@ -15,6 +19,18 @@ decompress-response@^3.2.0:
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
+
+eventyoshi@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/eventyoshi/-/eventyoshi-0.2.0.tgz#4ec78f356fba34d69b8509eb598b57bc25ef8b86"
+
+feedme@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/feedme/-/feedme-1.1.1.tgz#381a10a327c2762c584c94c97d828f0ec5582c17"
+  dependencies:
+    clarinet "^0.12.0"
+    eventyoshi "^0.2.0"
+    sax "^1.0.0"
 
 font-awesome@^4.7.0:
   version "4.7.0"
@@ -102,9 +118,17 @@ prepend-http@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
 
+requirejs@^2.3.5:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.3.5.tgz#617b9acbbcb336540ef4914d790323a8d4b861b0"
+
 safe-buffer@^5.0.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+
+sax@^1.0.0:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
 timed-out@^4.0.0:
   version "4.0.1"
