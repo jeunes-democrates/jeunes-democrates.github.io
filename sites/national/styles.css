@@ -138,6 +138,8 @@ footer { background-color: #143642; padding: 4rem 0 2rem; color: #ccc !important
 	font-family: var(--serif-font);
 	line-height: 1.2;
 	margin-top: .5rem;
+	text-decoration-skip: ink;
+	text-decoration-skip-ink: auto;
 }
 
 .articleWall__anchor:link,

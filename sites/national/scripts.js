@@ -239,16 +239,21 @@ function vueSetup() {
 	// DATA FETCHING
 
 	function getThumbnail(article) {
-		var thumbnail = article.description
-			.match("https:\/\/cdn-images-1.medium.com\/max\/960\/([^.]*).jpeg")[0]
-			.replace("/960/", "/320/") 
-		return thumbnail
+		var articleImages = article.description.match("https:\/\/cdn-images-1.medium.com\/max\/960\/([^.]*).jpeg")
+		if (articleImages) {
+			var thumbnail = articleImages[0].replace("/960/", "/320/")
+			return thumbnail
+		} else { 
+			return "meeting.jpg"
+		}	
 	}
 
-	Vue.http.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F133b")
+	Vue.http.get("https://api.rss2json.com/v1/api.json?api_key=5ftufd58cwsriwlqozmec5fjliaa479brtt3dra6&rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F133b&count=3")
 	.then((response) => {
 		var actus = response.body.items
-		for (i in actus) { actus[i].thumbnail = getThumbnail(actus[i]) }
+		for (i in actus) {
+			actus[i].thumbnail = getThumbnail(actus[i])
+		}
 		store.commit('updateData', {'articles': actus})
 	})
 
