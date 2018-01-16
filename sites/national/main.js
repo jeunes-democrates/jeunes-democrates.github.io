@@ -189,9 +189,9 @@ requirejs([
 									<form>
 										<div class="input-group">
 											<input type="email" placeholder="mon@adresse.mail" class="form-control form-control-lg">
-											<span class="input-group-btn">
-												<button type="submit" class="btn btn-lg btn-secondary email-submit">→</button>
-											</span>
+											<siv class="input-group-append">
+												<button type="submit" class="btn btn-lg btn-secondary email-submit"><i class="fa fa-chevron-right"></i></button>
+											</siv>
 										</div>
 									</form>
 								</div>

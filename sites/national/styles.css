@@ -7,12 +7,20 @@ body { color: white; overflow-x: hidden; }
 /* Hero image and title */
 
 .top-background {
-	width: 100%;
+	position: relative;
+	background-color: rgba(0,0,0,.9);
+}
+
+.top-background::before {
+	position: absolute;
+	content: ""; opacity: .4;
+	width: 100%; height: 100%;
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-image: url('media/meeting.jpg');
+	background-image: url('media/bayrou-and-the-crew.jpg');
 }
+
 
 .title__image {
 	max-height: 16vh;
@@ -23,15 +31,14 @@ body { color: white; overflow-x: hidden; }
 @media (min-width: 576px) { .header-wrapper { text-align: center; } }
 @media (min-width: 768px) { .header-wrapper { text-align: inherit; } }
 
-.header-wrapper { padding: 4vh 0 6vh; } /* uses header-item to equalize, enables margin between multiple header-items */
-@media (min-width: 576px) { .header-wrapper { padding: 8vh 0 10vh; } }
+.header-wrapper { padding: 10vh 0 12vh; } /* uses header-item to equalize, enables margin between multiple header-items */
+@media (min-width: 576px) { .header-wrapper { padding: 14vh 0 16vh; } }
 
 .header-item { padding-top: 2vh; }
 
 .email-wrapper { filter: drop-shadow( .15rem .15rem .25rem #000 ); }
 @media (min-width: 576px) { .email-wrapper { text-align: center; } }
 @media (min-width: 768px) { .email-wrapper { text-align: right; } }
-.email-submit { max-height: 96%; }
 .form-submit-arrow { height: 1rem; opacity: .7; }
 
 
