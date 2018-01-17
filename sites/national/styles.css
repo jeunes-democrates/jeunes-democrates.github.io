@@ -141,10 +141,10 @@ footer { background-color: #143642; padding: 4rem 0 2rem; color: #ccc !important
 }
 
 .articleWall__title {
-	font-size: 1.4em;
+	font-size: 1.2em;
 	font-family: var(--serif-font);
 	line-height: 1.2;
-	margin-top: .5rem;
+	margin: .5rem 0;
 	text-decoration-skip: ink;
 	text-decoration-skip-ink: auto;
 }
@@ -158,4 +158,5 @@ footer { background-color: #143642; padding: 4rem 0 2rem; color: #ccc !important
 @media (min-width: 576px) {
 	.articleWall__scroller { flex-direction: row; }
 	.articleWall__anchor { width: 31%; }
+	.articleWall__title { font-size: 1.4em; }
 }
