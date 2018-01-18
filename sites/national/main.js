@@ -9,6 +9,19 @@ requirejs([
 	Vue.use(Vuex)
 	Vue.use(VueResource)
 
+	// Placeholders
+
+	window.placeholders = {
+		'articles' : [
+			{ "placeholder" : true },
+			{ "placeholder" : true },
+			{ "placeholder" : true },
+			{ "placeholder" : true },
+			{ "placeholder" : true },
+			{ "placeholder" : true }
+		]
+	}
+
 	// Store
 	window.store = new Vuex.Store({
 		state: {
@@ -29,11 +42,7 @@ requirejs([
 				{ "name" : "Facebook", "icon" : "facebook", "url" : "https://facebook.com/JeunesDemocrates" },
 				{ "name" : "RSS", "icon" : "rss", "url" : "https://medium.com/feed/133b" }
 			],
-			'articles': [
-				{ "placeholder" : true },
-				{ "placeholder" : true },
-				{ "placeholder" : true }
-			],
+			'articles': placeholders.articles,
 			'presentation': [
 				{
 					'title': "Notre équipe",
@@ -67,7 +76,8 @@ requirejs([
 	//		{ "name" : "Missions à pourvoir", "url" : "#" },
 	//		{ "name" : "Statuts et textes", "url" : "#" }
 	//	]
-				
+
+		
 
 	// COMPONENTS
 
@@ -80,6 +90,7 @@ requirejs([
 					<template v-for="article in articles">
 						<a class="articleWall__anchor" :href="article.link" target="_blank">
 							<div class="articleWall__illustration" :style="{ backgroundImage: 'url(' + article.thumbnail + ')' }"></div>
+							<div class="articleWall__loader"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></div>
 							<div class="articleWall__title">{{ article.title }}</div>
 						</a>
 					</template>
@@ -189,9 +200,9 @@ requirejs([
 									<form>
 										<div class="input-group">
 											<input type="email" placeholder="mon@adresse.mail" class="form-control form-control-lg">
-											<siv class="input-group-append">
-												<button type="submit" class="btn btn-lg btn-secondary email-submit"><i class="fa fa-chevron-right"></i></button>
-											</siv>
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-lg btn-primary email-submit"><i class="fa fa-chevron-right"></i></button>
+											</div>
 										</div>
 									</form>
 								</div>
@@ -205,16 +216,10 @@ requirejs([
 
 				<section>
 					<article-block
-						:articles="state.presentation"
-						class="container"
-						></article-block>
-				</section>
-
-				<section>
-					<article-block
 						:articles="state.articles"
-						:title="'Idées & actualités'"
+						:title="'Nos idées & actualités'"
 						class="container"
+						:class="{ loading: (state.articles==placeholders.articles) }"
 						></article-block>
 				</section>
 
@@ -240,7 +245,10 @@ requirejs([
 		computed: {
 			state () {
 				return this.$store.state
-			}
+			},
+			placeholders() {
+				return placeholders
+			},
 		}
 	})
 
@@ -258,7 +266,7 @@ requirejs([
 		}	
 	}
 
-	Vue.http.get("https://api.rss2json.com/v1/api.json?api_key=5ftufd58cwsriwlqozmec5fjliaa479brtt3dra6&rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F133b&count=3")
+	Vue.http.get("https://api.rss2json.com/v1/api.json?api_key=5ftufd58cwsriwlqozmec5fjliaa479brtt3dra6&rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F133b&count=6")
 	.then((response) => {
 		var actus = response.body.items
 		for (i in actus) {
